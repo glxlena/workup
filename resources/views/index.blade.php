@@ -13,7 +13,7 @@
       <div>
         <h1>Login</h1>
       </div>
-      <form method="POST" action="{{ route('login') }}">
+      <form method="POST" action="{{route('login')}}">
         @csrf
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>

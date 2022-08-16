@@ -90,33 +90,26 @@
           <thead>
             <tr>
               <th scope="col">Nome</th>
+              <th scope="col">Email</th>
+              <th scope="col">Tipo</th>
               <th scope="col">CPF</th>
-              <th scope="col">Endereço</th>
               <th scope="col">Telefone</th>
-              <th scope="col">Login</th>
               <th scope="col">Editar</th>
               <th scope="col">Remover</th>
             </tr>
           </thead>
           <tbody>
+            @foreach($users as $user)
             <tr>
-              <th scope="col">Maria Eduarda</th>
-              <td>736.927.574-02</td>
-              <td>Rua Flor, 132</td>
-              <td>(42)988436237</td>
-              <td>maria_eduarda02@login</td>
+              <th>{{$user->name}}</th>
+              <td>{{$user->email}}</td>
+              <td>{{$user->type}}</td>
+              <td>{{$user->cpf}}</td>
+              <td>{{$user->phone}}</td>
               <td><button type="button" class="btn btn-info"><i class="bi bi-pencil" data-bs-toggle="modal" data-bs-target="#editfun"></i></button></button></td>
               <td><button type="button" class="btn btn-info"><i class="bi bi-trash3"></i></button></td>
             </tr>
-            <tr>
-              <th scope="col">Luís</th>
-              <td>084.263.846-17</td>
-              <td>Rua Trajano, 42</td>
-              <td>(42)998153627</td>
-              <td>luis17@login</td>
-              <td><button type="button" class="btn btn-info"><i class="bi bi-pencil" data-bs-toggle="modal" data-bs-target="#editfun2"></i></button></button></td>
-              <td><button type="button" class="btn btn-info"><i class="bi bi-trash3"></i></button></td>
-            </tr>
+            @endforeach
           </tbody>
         </table>
         <div class="modal fade" id="editfun" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

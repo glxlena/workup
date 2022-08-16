@@ -45,10 +45,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-}
+
 //Definindo relacionamento entre usuários e estabelecimento
 //em que um usuário pertence a um estabelecimento
-public function establishment ()
+public function establishment()
 {
   return $this->belongsTo(Establishment::class);
+}
 }

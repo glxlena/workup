@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+Auth::routes();
 Route::get('/', function () {
     return view('welcome');
 });
@@ -17,9 +18,12 @@ Route::get('/teste', function () {
     return view('teste');
   });
 
-Auth::routes();
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/login', function () {
-    return view('index');
-  });
+//Route::get('/login', function () {
+    //return view('index');
+  //});
+Route::middleware('auth')->group(function () {
+  Route::resource('user', App\Http\Controllers\UserController::class);
+});
