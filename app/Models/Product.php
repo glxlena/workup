@@ -20,4 +20,8 @@ class Product extends Model
     {
       return $this->belongsTo(Establishment::class);
     }
+    public function menus()
+    {
+      return $this->belongsToMany(Menu::class);
+    }
 }
