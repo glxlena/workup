@@ -22,10 +22,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+    //public function create()
+  //  {
+    //    return view('user.create');
+  //  }
 
     /**
      * Store a newly created resource in storage.
@@ -35,7 +35,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $data['password'] = \Hash::make($data['password']);
+        User::create($data);
+        return redirect()->route('user.funcionarios');
     }
 
     /**
@@ -57,7 +60,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return view('users.funcionarios', ['user'=> $user]);
     }
 
     /**
@@ -69,7 +72,9 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $data = $request->all();
+        $user->update($data);
+        return redirect()->route('user.show', $user);
     }
 
     /**

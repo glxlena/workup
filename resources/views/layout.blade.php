@@ -17,7 +17,7 @@
           <div class="navbar-nav">
             <a class="nav-link active" aria-current="page" href="produtos.html">Produtos</a>
             <a class="nav-link" href="pedidos.html">Ver Pedidos</a>
-            <a class="nav-link" href="funcionarios.html">Funcionários</a>
+            <a class="nav-link" href="funcionarios.html">Usuários</a>
             <a class="nav-link" href="empresa.html">Dados da Empresa</a>
           </div>
         </div>
