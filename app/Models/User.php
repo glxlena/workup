@@ -52,4 +52,7 @@ public function establishment()
 {
   return $this->belongsTo(Establishment::class);
 }
+public function type(){
+return $this->type=='manager' ? 'Gerente' : 'Funcionário';
+}
 }
