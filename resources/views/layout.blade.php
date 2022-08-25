@@ -9,18 +9,50 @@
   <body class="bg-warning vw-100 vh-100">
     <nav class="navbar navbar-expand-lg bg-info">
       <div class="container-fluid">
-        <a class="navbar-brand" href="home">Cardápio</a>
+        <a class="navbar-brand" href="home"><i class="bi bi-book">Cardápio</i></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-link active" aria-current="page" href="product">Produtos</a>
-            <a class="nav-link" href="order">Ver Pedidos</a>
-            <a class="nav-link" href="user">Usuários</a>
-            <a class="nav-link" href="establishment">Dados da Empresa</a>
+            <a class="nav-link active" aria-current="page" href="product"><i class="bi bi-list-ul">Produtos</i></a>
+            <a class="nav-link" href="order"><i class="bi bi-list-check">Ver Pedidos</i></a>
+            <a class="nav-link" href="user"><i class="bi bi-people">Usuários</i></a>
+            <a class="nav-link" href="establishment"><i class="bi bi-house">Dados da Empresa</i></a>
+            </div>
           </div>
-        </div>
+            <div class="d-flex flex-row-reverse navibar-nav">
+              <div>
+            @guest
+                @if (Route::has('login'))
+                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                @endif
+
+                @if (Route::has('register'))
+                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                @endif
+            @else
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        {{ Auth::user()->name }}
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                         document.getElementById('logout-form').submit();"><i class="bi bi-box-arrow-right">
+                            {{ __('Logout') }}
+                        </i></a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </div>
+                </li>
+            @endguest
+          </div>
+          </div>
+          </div>
+
       </div>
     </nav>
     @yield ('base')

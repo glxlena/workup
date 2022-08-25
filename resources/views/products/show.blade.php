@@ -6,7 +6,7 @@
   <h2> Vizualização de Produto</h2>
   <ul class="list-group w-100">
     <li class="list-group-item"><strong>Nome: </strong>{{$product->name}}</li>
-    <li class="list-group-item"><strong>Preço: </strong>{{$product->price_cents}}</li>
+    <li class="list-group-item"><strong>Preço: </strong>R${{($product->price_cents)/100}}</li>
     <li class="list-group-item"><strong>Descrição: </strong>{{$product->description}}</li>
     <li class="list-group-item"><strong>Disponibilidade: </strong>{{$product->is_available}}</li>
 </div>

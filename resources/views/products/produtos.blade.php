@@ -2,7 +2,9 @@
 @section ('title', 'Produtos')
 @section ('base')
 <br>
-            <div class="modal fade" id="novo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="d-flex w-100 position-absolute justify-content-center align-items-start">
+  <div class="p-4 w-100 m-4 bg-light">
+          <div class="modal fade" id="novo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -16,7 +18,7 @@
                   <p><label for="inputNome" class="form-label">Nome</label>
                     <input type="form-label" name= "name" id="inputNome" class="form-control"></p>
                     <p><label for="inputValor" class="form-label">Preço</label>
-                      <input type="form-label" name="price_cents" id="inputValor" class="form-control"></p>
+                      <input type="number" step="0.01" name="price_cents" id="inputValor" class="form-control"></p>
                     </div>
                     <label for="inputDescricao" class="form-label">Descrição</label>
                       <input type="form-label" name="description" id="inputDescricao" class="form-control">
@@ -33,9 +35,6 @@
               </div>
             </div>
           </div>
-        <br>
-        <div class="d-flex w-100 position-absolute justify-content-center align-items-start">
-          <div class="p-4 w-100 m-4 bg-light">
           <h2> Gerenciamento de Produtos
           </h2>
           <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#novo">
@@ -57,7 +56,7 @@
             <tr>
               <td>{{$product->name}}</td>
               <td>{{$product->description}}</td>
-              <td>{{$product->price_cents}}</td>
+              <td>R${{($product->price_cents)/100}}</td>
               <td>{{$product->is_available}}</td>
               <td><a href="{{route('product.edit', $product->id)}}" type="button" class="btn btn-info"><i class="bi bi-pencil" data-bs-toggle="modal"></i></a></td>
               <form method="POST" action ="{{route('product.destroy', $product->id)}}">
@@ -70,4 +69,6 @@
         </table>
       </div>
     </div>
-@endsection
+  </div>
+</div>
+  @endsection

@@ -14,7 +14,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $establishment_id = \Auth::user()->establishment_id;
+        $products = Product::where('establishment_id', $establishment_id)
+                    ->get();
 
         return view('products.produtos', ['products'=> $products]);
     }
@@ -38,7 +40,13 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-      $data['is_available']= isset( $data['is_available'] )?'1':'0');
+        if (isset ($data ['is_available'])){
+          $data ['is_available']='1';
+        } else {
+          $data ['is_available']='0';
+        }
+        $establishment_id = \Auth::user()->establishment_id;
+        $data['establishment_id']=$establishment_id;
         Product::create($data);
 
         return redirect()->route('products.show');
@@ -76,10 +84,14 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $data = $request->all();
-
+        if ($data['passoword']===null){
+          unset ($data['passoword']);
+        } else {
+          $data['passowrd']=\Hash::make($data['passowrd']);
+        }
         $product->update($data);
 
-        return redirect()->route('products.show');
+        return redirect()->route('products.show', $product);
     }
 
     /**
