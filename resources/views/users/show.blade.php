@@ -10,6 +10,10 @@
     <li class="list-group-item"><strong>Tipo: </strong>{{$user->type == 'Gerente'?'Gerente':'Funcionário'}}</li>
     <li class="list-group-item"><strong>CPF: </strong>{{$user->cpf}}</li>
     <li class="list-group-item"><strong>Telefone: </strong>{{$user->phone}}</li>
+    <br>
+  </ul>
+    <a href="{{route('user.edit', $user->id)}}" type="button" class="btn btn-info"><i class="bi bi-pencil"></i></a>
+    <a href="{{route('user.index')}}" type="button" class="btn btn-info"><i class="bi bi-skip-backward-circle"></i></a>
 </div>
 </div>
 @endsection

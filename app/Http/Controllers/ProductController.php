@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
@@ -18,6 +19,7 @@ class ProductController extends Controller
         $products = Product::where('establishment_id', $establishment_id)
                     ->get();
 
+
         return view('products.produtos', ['products'=> $products]);
     }
 
@@ -26,10 +28,10 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-  //  public function create()
-  //  {
-    //
-  //  }
+    public function create()
+   {
+    return view('products.create');
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -37,19 +39,19 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        $data = $request->all();
-        if (isset ($data ['is_available'])){
-          $data ['is_available']='1';
-        } else {
-          $data ['is_available']='0';
-        }
+        $data = $request->validated();
+        //if (isset ($data ['is_available'])){
+        //  $data ['is_available']='1';
+        //} else {
+      //    $data ['is_available']='0';
+      //}
         $establishment_id = \Auth::user()->establishment_id;
         $data['establishment_id']=$establishment_id;
         Product::create($data);
-
-        return redirect()->route('products.show');
+        $product=Product::create($data);
+        return redirect()->route('product.show', $product->$id);
     }
 
     /**
@@ -69,7 +71,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
         return view('products.edit', ['product'=> $product]);
     }
@@ -84,14 +86,11 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $data = $request->all();
-        if ($data['passoword']===null){
-          unset ($data['passoword']);
-        } else {
-          $data['passowrd']=\Hash::make($data['passowrd']);
-        }
+        $data['price_cents']= (int) ($data['price'] * 100);
+
         $product->update($data);
 
-        return redirect()->route('products.show', $product);
+        return redirect()->route('product.show', $product->$id);
     }
 
     /**

@@ -3,28 +3,47 @@
 @section ('base')
 <div class="d-flex w-100 position-absolute justify-content-center align-items-start">
   <div class="p-4 w-100 m-4 bg-light">
-    <h2> Edição de Produto
+    <h2> Novo Produto
     </h2>
-  <form method="POST" action="{{route('product.update', $product->id)}}">
+  <form method="POST" action="{{route('product.store')}}">
     @csrf
-    @method('PUT')
 <div class="d-flex flex-row gap-1">
   <label for="inputNome" class="form-label">Nome</label>
-  <input name="name" type="text" id="inputNome" class="form-control" value="{{old('name', $product->name)}}">
+  <input name="name" type="text" id="inputNome" class="form-control">
+  @error('name')
+  <div class="text-danger">
+    {{$message}}
+  </div>
+  @enderror
   <label for="inputDescricao" class="form-label">Descrição</label>
-  <input name="description" type="text" id="inputDescricao" class="form-control" value="{{old('description', $product->description)}}">
+  <input name="description" type="text" id="inputDescricao" class="form-control" >
+  @error('description')
+  <div class="text-danger">
+    {{$message}}
+  </div>
+  @enderror
 </div>
 <br>
 <div class="d-flex flex-row gap-2">
   <label for="inputpreco" class="form-label">Preço</label>
-  <input name="price" type="number" id="inputpreco" class="form-control" value="{{($product->price_cents)/100}}">
+  <input name="price" type="number" id="inputpreco" class="form-control">
+  @error('price_cents')
+  <div class="text-danger">
+    {{$message}}
+  </div>
+  @enderror
 </div>
 <br>
 <div class="d-flex flex-row gap-3">Disponibilidade
   <select class="form-select" name="is_available" aria-label="Default select example">
-    <option value="1" @if($product->is_available) selected @endif>Disponível</option>
-    <option value="0" @if (!$product->is_available) selected @endif>Indisponível</option>
+    <option value="1">Disponível</option>
+    <option value="0">Indisponível</option>
   </select>
+  @error('is_available')
+  <div class="text-danger">
+    {{$message}}
+  </div>
+  @enderror
 </div>
 <br>
 <div class="input-group mb-3">
@@ -33,7 +52,7 @@
 </div>
 <br>
 <div <div class="modal-footer">
-<button type="submit" class="btn btn-warning">Alterar</button>
+<button type="submit" class="btn btn-warning">Salvar</button>
 </div>
 </div>
 </div>

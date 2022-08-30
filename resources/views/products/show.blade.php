@@ -8,7 +8,11 @@
     <li class="list-group-item"><strong>Nome: </strong>{{$product->name}}</li>
     <li class="list-group-item"><strong>Preço: </strong>R${{($product->price_cents)/100}}</li>
     <li class="list-group-item"><strong>Descrição: </strong>{{$product->description}}</li>
-    <li class="list-group-item"><strong>Disponibilidade: </strong>{{$product->is_available}}</li>
+    <li class="list-group-item"><strong>Disponibilidade: </strong>{{$product->is_available ? 'Disponível' : 'Indisponível'}}</li>
+  </ul>
+  <br>
+  <a href="{{route('product.edit', $product->id)}}" type="button" class="btn btn-info"><i class="bi bi-pencil"></i></a>
+  <a href="{{route('product.index')}}" type="button" class="btn btn-info"><i class="bi bi-skip-backward-circle"></i></a>
 </div>
 </div>
 @endsection

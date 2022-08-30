@@ -41,9 +41,8 @@
               <div class="d-flex flex-row gap-2">
                 <label for="inputType" class="form-label">Tipo de Usuário</label>
                 <select name="type" id="inputType" class="form-select">
-                  <option selected>Escolha</option>
-                  <option>Gerente</option>
-                  <option>Funcionário</option>
+                  <option value="Gerente">Gerente</option>
+                  <option value="Funcionário">Funcionário</option>
                 </select>
               </div>
               <br>
