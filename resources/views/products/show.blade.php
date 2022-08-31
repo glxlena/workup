@@ -11,8 +11,10 @@
     <li class="list-group-item"><strong>Disponibilidade: </strong>{{$product->is_available ? 'Disponível' : 'Indisponível'}}</li>
   </ul>
   <br>
+  <div class="d-flex flex-row-reverse gap-2">
   <a href="{{route('product.edit', $product->id)}}" type="button" class="btn btn-info"><i class="bi bi-pencil"></i></a>
   <a href="{{route('product.index')}}" type="button" class="btn btn-info"><i class="bi bi-skip-backward-circle"></i></a>
+</div>
 </div>
 </div>
 @endsection

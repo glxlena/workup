@@ -28,12 +28,18 @@
 </div>
 <br>
 <div class="input-group mb-3">
-  <input type="file" name="picture" class="form-control" id="inputGroupFile02">
-  <label class="input-group-text" for="inputGroupFile02">Upload</label>
+  <label class="form-label" for="picture">Imagem </label>
+  <input type="file" name="picture" class="form-control" accept="image/jpeg/jpg">
+  @error ('picture')
+  <div class="text-danger">
+    {{$message}}
+  </div>
+  @enderror
 </div>
 <br>
-<div <div class="modal-footer">
+<div class="d-flex flex-row-reverse gap-2">
 <button type="submit" class="btn btn-warning">Alterar</button>
+<a href="{{route('product.index')}}" type="button" class="btn btn-info"><i class="bi bi-skip-backward-circle"></i></a>
 </div>
 </div>
 </div>

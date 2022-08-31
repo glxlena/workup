@@ -41,11 +41,15 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $data = $request->validated();
-        //if (isset ($data ['is_available'])){
-        //  $data ['is_available']='1';
-        //} else {
-      //    $data ['is_available']='0';
-      //}
+
+        if($data->hasFile('picture')) {
+          $imageFile =$data->file('picture');
+        }
+        $image_path = $imageFile->storeAs(
+          "images/products/$product->id",
+          'image.jpg',
+          'public',
+        );
         $establishment_id = \Auth::user()->establishment_id;
         $data['establishment_id']=$establishment_id;
         $data['price_cents']= (int) ($data['price'] * 100);

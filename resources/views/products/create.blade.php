@@ -5,7 +5,7 @@
   <div class="p-4 w-100 m-4 bg-light">
     <h2> Novo Produto
     </h2>
-  <form method="POST" action="{{route('product.store')}}">
+  <form method="POST" action="{{route('product.store')}}"  enctype="multipart/form-data">
     @csrf
 <div class="d-flex flex-row gap-1">
   <label for="inputNome" class="form-label">Nome</label>
@@ -45,11 +45,18 @@ Disponibilidade
 </div>
 <br>
 <div class="input-group mb-3">
-  <input type="file" name="picture" class="form-control" id="inputGroupFile02">
-  <label class="input-group-text" for="inputGroupFile02">Upload</label>
+  <label class="form-label" for="picture">Imagem </label>
+  <input type="file" name="picture" class="form-control" accept="image/jpeg/jpg">
+  @error ('picture')
+  <div class="text-danger">
+    {{$message}}
+  </div>
+  @enderror
 </div>
+<div class="d-flex flex-row-reverse gap-1">
+  <button type="submit" class="btn btn-warning">Salvar</button>
 <a href="{{route('product.index')}}" type="button" class="btn btn-info"><i class="bi bi-skip-backward-circle"></i></a>
-<button type="submit" class="btn btn-warning">Salvar</button>
+</form>
 </div>
 </div>
 </div>
