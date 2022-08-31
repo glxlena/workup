@@ -25,7 +25,7 @@
           <tbody>
             @foreach ($products as $product)
             <tr>
-              <td>{{$product->picture}}</td>
+              <td>.</td>
               <td>{{$product->name}}</td>
               <td>{{$product->description}}</td>
               <td>R${{($product->price_cents)/100}}</td>

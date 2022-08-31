@@ -19,7 +19,6 @@ class ProductController extends Controller
         $products = Product::where('establishment_id', $establishment_id)
                     ->get();
 
-
         return view('products.produtos', ['products'=> $products]);
     }
 
@@ -49,9 +48,9 @@ class ProductController extends Controller
       //}
         $establishment_id = \Auth::user()->establishment_id;
         $data['establishment_id']=$establishment_id;
-        Product::create($data);
+        $data['price_cents']= (int) ($data['price'] * 100);
         $product=Product::create($data);
-        return redirect()->route('product.show', $product->$id);
+        return redirect()->route('product.show', $product->id);
     }
 
     /**
@@ -90,7 +89,7 @@ class ProductController extends Controller
 
         $product->update($data);
 
-        return redirect()->route('product.show', $product->$id);
+        return redirect()->route('product.show', $product->id);
     }
 
     /**

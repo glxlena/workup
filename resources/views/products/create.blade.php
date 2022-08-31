@@ -32,9 +32,7 @@
     {{$message}}
   </div>
   @enderror
-</div>
-<br>
-<div class="d-flex flex-row gap-3">Disponibilidade
+Disponibilidade
   <select class="form-select" name="is_available" aria-label="Default select example">
     <option value="1">Disponível</option>
     <option value="0">Indisponível</option>
@@ -50,8 +48,7 @@
   <input type="file" name="picture" class="form-control" id="inputGroupFile02">
   <label class="input-group-text" for="inputGroupFile02">Upload</label>
 </div>
-<br>
-<div <div class="modal-footer">
+<a href="{{route('product.index')}}" type="button" class="btn btn-info"><i class="bi bi-skip-backward-circle"></i></a>
 <button type="submit" class="btn btn-warning">Salvar</button>
 </div>
 </div>
