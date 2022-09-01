@@ -42,19 +42,23 @@ class ProductController extends Controller
     {
         $data = $request->validated();
 
-        if($data->hasFile('picture')) {
-          $imageFile =$data->file('picture');
-        }
-        $image_path = $imageFile->storeAs(
-          "images/products/$product->id",
-          'image.jpg',
-          'public',
-        );
-        $establishment_id = \Auth::user()->establishment_id;
-        $data['establishment_id']=$establishment_id;
+        $data['establishment_id'] = \Auth::user()->establishment_id;
         $data['price_cents']= (int) ($data['price'] * 100);
+
         $product=Product::create($data);
-        return redirect()->route('product.show', $product->id);
+
+        if($request->hasFile('image')) {
+          $imageFile =$request->file('image');
+
+        $product->update([
+          'image_path'=>$imageFile->storeAs(
+            "images/products/$product->id",
+            'image.jpg',
+            'public',
+          )
+          ]);
+        }
+        return redirect()->route('product.show');
     }
 
     /**

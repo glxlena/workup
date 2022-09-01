@@ -46,8 +46,8 @@ Disponibilidade
 <br>
 <div class="input-group mb-3">
   <label class="form-label" for="picture">Imagem </label>
-  <input type="file" name="picture" class="form-control" accept="image/jpeg/jpg">
-  @error ('picture')
+  <input type="file" name="image" class="form-control" accept="image/jpeg/jpg">
+  @error ('image')
   <div class="text-danger">
     {{$message}}
   </div>

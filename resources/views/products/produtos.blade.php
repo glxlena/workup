@@ -25,7 +25,7 @@
           <tbody>
             @foreach ($products as $product)
             <tr>
-              <td>.</td>
+              <td> <img src="{{asset('/storage/' . $product->image_path)}}" width="120" height="80"> </td>
               <td>{{$product->name}}</td>
               <td>{{$product->description}}</td>
               <td>R${{($product->price_cents)/100}}</td>
