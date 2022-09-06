@@ -58,7 +58,7 @@ class ProductController extends Controller
           )
           ]);
         }
-        return redirect()->route('product.show');
+        return redirect()->route('product.index');
     }
 
     /**
@@ -95,7 +95,19 @@ class ProductController extends Controller
         $data = $request->all();
         $data['price_cents']= (int) ($data['price'] * 100);
 
-        $product->update($data);
+
+        if($request->hasFile('image')) {
+          $imageFile =$request->file('image');
+
+        $image_path = $imageFile->storeAs(
+            "images/products/$product->id",
+            'image.jpg',
+            'public',
+          );
+          $data['image_path']= $image_path;
+        }
+
+          $product->update($data);
 
         return redirect()->route('product.show', $product->id);
     }

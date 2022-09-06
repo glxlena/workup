@@ -2,10 +2,10 @@
 @section ('title', 'Editar')
 @section ('base')
 <div class="d-flex w-100 position-absolute justify-content-center align-items-start">
-  <div class="p-4 w-100 m-4 bg-light">
+  <div class="p-4 w-100 m-4 bg-light rounded">
     <h2> Edição de Produto
     </h2>
-  <form method="POST" action="{{route('product.update', $product->id)}}">
+  <form method="POST" action="{{route('product.update', $product->id)}}" enctype="multipart/form-data">
     @csrf
     @method('PUT')
 <div class="d-flex flex-row gap-1">
@@ -29,8 +29,8 @@
 <br>
 <div class="input-group mb-3">
   <label class="form-label" for="picture">Imagem </label>
-  <input type="file" name="picture" class="form-control" accept="image/jpeg/jpg">
-  @error ('picture')
+  <input type="file" name="image" class="form-control" accept="image/jpeg/jpg">
+  @error ('image')
   <div class="text-danger">
     {{$message}}
   </div>

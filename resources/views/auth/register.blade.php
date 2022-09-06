@@ -1,77 +1,82 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="pt-BR" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+    <title>Tela de Cadastro</title>
+  </head>
+  <body class="bg-warning">
+    <div class="d-flex h-100 m-4 position-absolute justify-content-center align-items-center">
+      <div class="p-4 w-75 bg-light rounded">
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
-
-                        <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+        <form class="row g-3">
+          <h1>Cadastro de Empresas </h1>
+          <div class="col-6">
+            <label for="inputCnpj" class="form-label">CNPJ</label>
+            <input name="cnpj" type="text" class="form-control" id="inputAddress2" placeholder="">
+          </div>
+          <div class="col-md-6">
+            <label for="inputTrading" class="form-label">Razão Social</label>
+            <input name="trading_name" type="text" class="form-control" id="inputCity">
+          </div>
+          <div class="col-6">
+            <label for="inputName" class="form-label">Nome da Empresa</label>
+            <input name="company_name" type="text" class="form-control" id="inputAddress2" placeholder="">
+          </div>
+          <div class="col-md-6">
+            <label for="inputPhone" class="form-label">Telefone</label>
+            <input name="phone" type="text" class="form-control" id="inputCity">
+          </div>
+          <div class="col-12">
+            <label for="inputAddress" class="form-label">Endereço</label>
+            <input name="adress" type="text" class="form-control" id="inputAddress" placeholder="">
+          </div>
+          <br>
+          <h2> Cadastro de Usuário</h2>
+          <form class="" action="{{route('user.store')}}" method="post">
+            @csrf
+            <div class="d-flex flex-row gap-2">
+              <label for="inputUsuario" class="form-label">Nome</label>
+              <input name="name" type="text" id="inputUsuario" class="form-control">
+              <label for="inputtel" class="form-label">Telefone</label>
+              <input name="phone" type="text" id="inputel" class="form-control">
+              <label for="inputcpf" class="form-label">CPF</label>
+              <input name="cpf" type="text" id="inputcpf" class="form-control">
             </div>
-        </div>
+            <br>
+            <div class="d-flex flex-row gap-2">
+              <label for="inputEmail" class="form-label">Email</label>
+              <input name="email" type="text" id="inputEmail" class="form-control">
+              <label for="exampleInputSenha" class="form-label">Senha</label>
+              <input name="password" type="password" class="form-control" id="exampleInputSenha">
+            </div>
+            <br>
+            <div class="d-flex flex-row gap-2">
+              <label for="inputType" class="form-label">Tipo de Usuário</label>
+              <select name="type" id="inputType" class="form-select">
+                <option value="Gerente">Gerente</option>
+                <option value="Funcionário">Funcionário</option>
+              </select>
+            </div>
+            <br>
+          </form>
+          <br>
+          <div class="col-12">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="gridCheck">
+              <label class="form-check-label" for="gridCheck">
+                Check me out
+              </label>
+            </div>
+            <br>
+          </div>
+          <div class="col-12">
+            <button type="submit" class="btn btn-info"><a href="{{route('product.index')}}">Cadastrar</a></button>
+          </div>
+        </form>
+      </div>
     </div>
-</div>
-@endsection
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+  </body>
+</html>

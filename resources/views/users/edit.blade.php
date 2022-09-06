@@ -2,7 +2,7 @@
 @section ('title', 'Editar')
 @section ('base')
 <div class="d-flex w-100 position-absolute justify-content-center align-items-start">
-  <div class="p-4 w-100 m-4 bg-light">
+  <div class="p-4 w-100 m-4 bg-light rounded">
     <h2> Edição de Usuário
     </h2>
   <form method="POST" action="{{route('user.update', $user->id)}}">
