@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Menu;
+use App\Http\Requests\MenuRequest;
 
 class MenuController extends Controller
 {
@@ -13,7 +15,11 @@ class MenuController extends Controller
      */
     public function index()
     {
-        //
+        $establishment_id = \Auth::user()->establishment_id;
+        $menus = Menu::where('establishment_id', $establishment_id)
+                    ->get();
+
+        return view('menus.cardapios', ['menus'=> $menus]);
     }
 
     /**
@@ -23,7 +29,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        //
+        return view ('menus.create');
     }
 
     /**
@@ -32,9 +38,11 @@ class MenuController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MenuRequest $request)
     {
-        //
+        $data = $request->all();
+         Menu::create($data);
+         return redirect()->route('menu.index');
     }
 
     /**
@@ -54,9 +62,9 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Menu $menu)
     {
-        //
+        return view('menus.edit', ['menu'=> $menu]);
     }
 
     /**
@@ -66,7 +74,7 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Menu $menu)
     {
         //
     }

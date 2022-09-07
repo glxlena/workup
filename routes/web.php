@@ -9,4 +9,5 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
   Route::resource('user', App\Http\Controllers\UserController::class);
   Route::resource('product', App\Http\Controllers\ProductController::class);
+  Route::resource('menu', App\Http\Controllers\MenuController::class);
 });
