@@ -1,5 +1,5 @@
 @extends ('layout')
-@section ('title', 'Editar')
+@section ('title', 'Criar')
 @section ('base')
 <br>
   <div class="d-flex w-100 position-absolute justify-content-center align-items-start">

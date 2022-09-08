@@ -1,15 +1,19 @@
 @extends('layout')
-@section ('title', 'Ver Cardápio')
+@section ('title', 'Editar')
 @section ('base')
 <br>
   <div class="d-flex w-100 position-absolute justify-content-center align-items-start">
-    <div class="p-4 w-100 m-4 bg-light">
-      <h3> Vizualizar Cardápio </h3>
+    <div class="p-4 w-100 m-4 bg-light rounded">
+      <h3> Editar Cardápio </h3>
+      <form method="POST" action="{{route('menu.update', $menu->id)}}" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
       <div class="d-flex flex-row gap-5">
         <div>
-          <b>Nome do Cardápio:</b> Cardápio Principal
-          <br>
-          <b> Criado em:</b> 27/05/22 17:32
+          <label for="inputName" class="form-label">Nome</label>
+          <input name="name" type="text" id="inputName" class="form-control" value="{{$menu->name}}">
+          <label for="inputDescriprion" class="form-label">Telefone</label>
+          <input name="description" type="text" id="inputDescription" class="form-control" value="{{$menu->description}}">
         </div>
         <div class="d-flex flex-row gap-3">
           Ativar/Desativar:<div class="form-check form-switch">
@@ -19,15 +23,7 @@
           <label for="inputProdutoCardapio" class="form-label">Adicionar Produto:</label>
           <br>
           <select id="inputProdutoCardapio" class="form-select">
-            <option selected>Escolha...</option>
-            <option>Frango Frito</option>
-            <option>Batata Frita</option>
-            <option>X-Salada</option>
-            <option>X-Burguer</option>
-            <option>X-Frango</option>
-            <option>Combo de Frango</option>
-            <option>Suco de Laranja</option>
-            <option>Suco de Morango</option>
+            <option>.</option>
           </select>
           <button type="button" class="btn btn-info"><i class="bi bi-plus-circle"></i>
           </button>
@@ -44,27 +40,21 @@
           </tr>
         </thead>
         <tbody>
+          @foreach
           <tr>
-            <th scope="col">Frango Frito</th>
-            <td>Coxa sobrecoxa empanada e frita, acompanha molhos caseiros.</td>
-            <td>R$15,00</td>
-            <td>Disponível</td>
+            <td>.</td>
+            <td>.</td>
+            <td>.</td>
+            <td>.</td>
+            <form method="POST" action ="{{route('menu.destroy', $menu->id)}}">
+              @csrf
+              @method('delete')
+            <td><button type="button" class="btn btn-danger"><i class="bi bi-trash3"></i></button></form></td>
           </tr>
-          <tr>
-            <th scope="col">Suco de Laranja</th>
-            <td>Laranja, água ou leite, açúcar.</td>
-            <td>R$7,00</td>
-            <td>Disponível</td>
-          </tr>
-          <tr>
-            <th scope="col">Combo Frango</th>
-            <td>Tirinhas de peito de frango, frango empanado frito, frango empanado frito picante, acompanha molhos caseiros, refrigerante da preferência do cliente, onion rings e batata frita.</td>
-            <td>R$40,00</td>
-            <td>Indisponível</td>
-          </tr>
+          @endforeach
         </tbody>
       </table>
-      <button type="button" class="btn btn-info"><a href="gerente.html">Salvar</a></button>
+      <button type="submit" class="btn btn-info"><a href="{{route('menu.show')}}">Salvar</a></button>
     </div>
   </div>
 @endsection
