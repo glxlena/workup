@@ -1,20 +1,20 @@
 @extends ('layout')
-@section ('title', 'Gerenciar Cardápios')
+@section ('title', 'Cardápios')
 @section ('base')
 <br>
         <div class="d-flex w-100 position-absolute justify-content-center align-items-start">
-          <div class="p-4 w-100 m-4 bg-light">
+          <div class="p-4 w-100 m-4 bg-light rounded">
           <h2> Gerenciamento de Cardápios
           </h2>
-          <a href="{{route('menus.create')}}"><button type="button" class="btn btn-info" data-bs-target="#novo">
+          <a href="{{route('menu.create')}}"><button type="button" class="btn btn-info" data-bs-target="#novo">
             Novo Cardápio +
           </button></a>
           <table class="table">
             <thead>
               <tr>
                 <th scope="col">Título</th>
-                <th scope="col">Data de Criação</th>
-                <th scope="col">Ativo</th>
+                <th scope="col">Descrição</th>
+                <th scope="col">Disponibilidade</th>
                 <th scope="col">Editar</th>
                 <th scope="col">Ver</th>
                 <th scope="col">Remover</th>
@@ -23,15 +23,15 @@
             <tbody>
               @foreach ($menus as $menu)
               <tr>
-                <td>{{$menu->.}}</td>
-                <td>{{$menu->.}}/td>
-                <td>{{$menu->is_available ? 'Disponível' : 'Indisponível'}}</td>
-                <td><a href="{{route('menus.edit', $menu->id)}}"><button type="button" class="btn btn-info"><i class="bi bi-pencil"></i></button></a></td>
-                <td><a href="{{route('menus.show', $menu->id)}}"><button type="button" class="btn btn-info"><i class="bi bi-eye"></i></button></a></td>
-                <form method="POST" action ="{{route('menus.destroy', $menu->id)}}">
+                <td>{{$menu->name}}</td>
+                <td>{{$menu->description}}</td>
+                <td>.</td>
+                <td><a href="menu/{{$menu->id}}/edit" type="button" class="btn btn-info"><i class="bi bi-pencil"></i></a></td>
+                <td><a href="{{route('menu.show', $menu->id)}}" type="button" class="btn btn-info"><i class="bi bi-eye"></i></a></td>
+                <form method="POST" action ="{{route('menu.destroy', $menu->id)}}">
                   @csrf
                   @method('delete')
-                <td><button type="button" class="btn btn-danger"><i class="bi bi-trash3"></i></button></form></td>
+                <td><button type="submit" class="btn btn-danger"><i class="bi bi-trash3"></i></button></form></td>
               </tr>
               @endforeach
               </tbody>
