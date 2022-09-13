@@ -12,7 +12,7 @@
         <div>
           <label for="inputName" class="form-label">Nome</label>
           <input name="name" type="text" id="inputName" class="form-control" value="{{$menu->name}}">
-          <label for="inputDescriprion" class="form-label">Telefone</label>
+          <label for="inputDescriprion" class="form-label">Descrição</label>
           <input name="description" type="text" id="inputDescription" class="form-control" value="{{$menu->description}}">
         </div>
         <div class="d-flex flex-row gap-3">
@@ -22,8 +22,10 @@
           </div>
           <label for="inputProdutoCardapio" class="form-label">Adicionar Produto:</label>
           <br>
-          <select id="inputProdutoCardapio" class="form-select">
-            <option>.</option>
+          <select name="product" class="form-select">
+            @foreach ($products as $product)
+            <option value="{{$product->id}}"> {{$product->name}}</option>
+            @endforeach
           </select>
           <button type="button" class="btn btn-info"><i class="bi bi-plus-circle"></i>
           </button>
@@ -40,7 +42,6 @@
           </tr>
         </thead>
         <tbody>
-          @foreach
           <tr>
             <td>.</td>
             <td>.</td>
@@ -51,10 +52,9 @@
               @method('delete')
             <td><button type="button" class="btn btn-danger"><i class="bi bi-trash3"></i></button></form></td>
           </tr>
-          @endforeach
         </tbody>
       </table>
-      <button type="submit" class="btn btn-info"><a href="{{route('menu.show')}}">Salvar</a></button>
+      <button type="submit" class="btn btn-info">Salvar</button>
     </div>
   </div>
 @endsection
