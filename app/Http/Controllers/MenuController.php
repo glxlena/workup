@@ -59,8 +59,8 @@ class MenuController extends Controller
             $query->where('menus.id', $menu->id);
           })
           ->get();
-          
-        return view('menus.show', ['menu'=>$menu]);
+
+        return view('menus.show', ['menu'=>$menu, 'addableProducts' => $addableProducts]);
     }
 
     /**
@@ -85,7 +85,7 @@ class MenuController extends Controller
     {
         $data = $request->all();
         $menu->update($data);
-        return redirect()->route('menu.show', $user);
+        return redirect()->route('menu.index');
     }
 
     /**

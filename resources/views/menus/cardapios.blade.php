@@ -14,7 +14,7 @@
               <tr>
                 <th scope="col">Título</th>
                 <th scope="col">Descrição</th>
-                <th scope="col">Disponibilidade</th>
+                <th scope="col">Status</th>
                 <th scope="col">Editar</th>
                 <th scope="col">Ver</th>
                 <th scope="col">Remover</th>
@@ -25,7 +25,7 @@
               <tr>
                 <td>{{$menu->name}}</td>
                 <td>{{$menu->description}}</td>
-                <td>.</td>
+                <td>{{$menu->is_active ? 'Ativo' : 'Inativo'}}</td>
                 <td><a href="menu/{{$menu->id}}/edit" type="button" class="btn btn-info"><i class="bi bi-pencil"></i></a></td>
                 <td><a href="{{route('menu.show', $menu->id)}}" type="button" class="btn btn-info"><i class="bi bi-eye"></i></a></td>
                 <form method="POST" action ="{{route('menu.destroy', $menu->id)}}">

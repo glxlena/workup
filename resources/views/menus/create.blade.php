@@ -1,5 +1,5 @@
 @extends ('layout')
-@section ('title', 'Criar')
+@section ('title', 'Criar Cardápio')
 @section ('base')
 <br>
         <div class="d-flex w-100 position-absolute justify-content-center align-items-start">
@@ -18,35 +18,26 @@
               @enderror
               <label for="inputDescricao" class="form-label">Descrição</label>
               <input name="description" type="text" id="inputDescricao" class="form-control" >
+              @error('description')
+              <div class="text-danger">
+                {{$message}}
+              </div>
+              @enderror
             </div>
             <br>
-            <label for="inputProduct" class="form-label">Add produto</label>
-            <select id="inputProduct" class="form-select">
-              <option>.</option>
-              <option>.</option>
-              <option>.</option>
-              <option>.</option>
-            </select>
+            <div class="d-flex flex-row gap-2">
+            Status
+              <select class="form-select" name="is_active" aria-label="Default select example">
+                <option value="1">Ativo</option>
+                <option value="0">Inativo</option>
+              </select>
+              @error('is_active')
+              <div class="text-danger">
+                {{$message}}
+              </div>
+              @enderror
+          </div>
               <br>
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Produto</th>
-                    <th scope="col">Descrição</th>
-                    <th scope="col">Preço</th>
-                    <th scope="col">Disponibilidade</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>.</td>
-                    <td>.</td>
-                    <td>.</td>
-                    <td>.</td>
-                  </tr>
-                  </tbody>
-              </table>
-
           <div class="d-flex flex-row-reverse gap-1">
             <button type="submit" class="btn btn-warning">Salvar</button>
             <a href="{{route('menu.index')}}" type="button" class="btn btn-info"><i class="bi bi-skip-backward-circle"></i></a>
