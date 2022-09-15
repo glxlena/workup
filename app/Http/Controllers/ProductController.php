@@ -14,7 +14,7 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    { 
         $establishment_id = \Auth::user()->establishment_id;
         $products = Product::where('establishment_id', $establishment_id)
                     ->get();

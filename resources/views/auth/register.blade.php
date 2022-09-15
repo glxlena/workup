@@ -10,8 +10,9 @@
     <div class="d-flex h-100 m-4 position-absolute justify-content-center align-items-center">
       <div class="p-4 w-75 bg-light rounded">
 
-        <form class="row g-3">
           <h1>Cadastro de Empresas </h1>
+          <form class="row g-3" action="{{route('register')}}" method="post">
+            @csrf
           <div class="col-6">
             <label for="inputName" class="form-label">Nome da Empresa</label>
             <input name="company_name" type="text" class="form-control" id="inputAddress2" placeholder="">
@@ -34,11 +35,14 @@
           </div>
           <br>
           <h2> Cadastro de Usuário</h2>
-          <form class="" action="{{route('user.store')}}" method="post">
-            @csrf
             <div class="d-flex flex-row gap-2">
               <label for="inputUsuario" class="form-label">Nome</label>
               <input name="name" type="text" id="inputUsuario" class="form-control">
+              @error('name')
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+              @enderror
               <label for="inputtel" class="form-label">Telefone</label>
               <input name="phone" type="text" id="inputel" class="form-control">
               <label for="inputcpf" class="form-label">CPF</label>
@@ -48,11 +52,17 @@
             <div class="d-flex flex-row gap-2">
               <label for="inputEmail" class="form-label">Email</label>
               <input name="email" type="text" id="inputEmail" class="form-control">
+              @error('email')
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+              @enderror
               <label for="exampleInputSenha" class="form-label">Senha</label>
               <input name="password" type="password" class="form-control" id="exampleInputSenha">
             </div>
-            <br>
             <div class="d-flex flex-row gap-2">
+              <label for="password-confirm" class="form-label">Confirmar Senha</label>
+              <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
               <label for="inputType" class="form-label">Tipo de Usuário</label>
               <select name="type" id="inputType" class="form-select">
                 <option value="Gerente">Gerente</option>
@@ -60,19 +70,8 @@
               </select>
             </div>
             <br>
-          </form>
-          <br>
           <div class="col-12">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="gridCheck">
-              <label class="form-check-label" for="gridCheck">
-                Check me out
-              </label>
-            </div>
-            <br>
-          </div>
-          <div class="col-12">
-            <button type="submit" class="btn btn-info"><a href="{{route('product.index')}}">Cadastrar</a></button>
+            <button type="submit" class="btn btn-info">Cadastrar</a></button>
           </div>
         </form>
       </div>
