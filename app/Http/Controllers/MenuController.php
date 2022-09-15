@@ -23,6 +23,11 @@ class MenuController extends Controller
         return view('menus.cardapios', ['menus'=> $menus]);
     }
 
+    public function showPublic(Menu $menu)
+    {
+      return view('menus.public.show', ['menu' => $menu]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

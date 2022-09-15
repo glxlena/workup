@@ -13,16 +13,16 @@
         <form class="row g-3">
           <h1>Cadastro de Empresas </h1>
           <div class="col-6">
-            <label for="inputCnpj" class="form-label">CNPJ</label>
-            <input name="cnpj" type="text" class="form-control" id="inputAddress2" placeholder="">
+            <label for="inputName" class="form-label">Nome da Empresa</label>
+            <input name="company_name" type="text" class="form-control" id="inputAddress2" placeholder="">
           </div>
           <div class="col-md-6">
             <label for="inputTrading" class="form-label">Razão Social</label>
             <input name="trading_name" type="text" class="form-control" id="inputCity">
           </div>
           <div class="col-6">
-            <label for="inputName" class="form-label">Nome da Empresa</label>
-            <input name="company_name" type="text" class="form-control" id="inputAddress2" placeholder="">
+            <label for="inputCnpj" class="form-label">CNPJ</label>
+            <input name="cnpj" type="text" class="form-control" id="inputAddress2" placeholder="">
           </div>
           <div class="col-md-6">
             <label for="inputPhone" class="form-label">Telefone</label>
