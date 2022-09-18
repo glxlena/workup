@@ -16,7 +16,6 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
             <a class="nav-link active" aria-current="page" href="{{route('product.index')}}"><i class="bi bi-list-ul">Produtos</i></a>
-            <a class="nav-link" href="order"><i class="bi bi-list-check">Ver Pedidos</i></a>
             <a class="nav-link" href="{{route('user.index')}}"><i class="bi bi-people">Usuários</i></a>
             <a class="nav-link" href="establishment"><i class="bi bi-house">Dados da Empresa</i></a>
             </div>
