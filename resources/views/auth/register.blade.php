@@ -10,7 +10,7 @@
     <div class="d-flex h-100 m-4 position-absolute justify-content-center align-items-center">
       <div class="p-4 w-75 bg-light rounded">
 
-          <h1>Cadastro de Empresas </h1>
+          <h1>Cadastro de Empresas</h1>
           <form class="row g-3" action="{{route('register')}}" method="post">
             @csrf
           <div class="col-6">
@@ -27,7 +27,7 @@
           </div>
           <div class="col-md-6">
             <label for="inputPhone" class="form-label">Telefone</label>
-            <input name="phone" type="text" class="form-control" id="inputCity">
+            <input name="company_phone" type="text" class="form-control" id="inputCity">
           </div>
           <div class="col-12">
             <label for="inputAddress" class="form-label">Endereço</label>

@@ -69,7 +69,7 @@ class RegisterController extends Controller
           'cnpj' => $data['cnpj'],
           'trading_name' => $data['trading_name'],
           'company_name' => $data['company_name'],
-          'phone' => $data['phone'],
+          'phone' => $data['company_phone'],
           'adress' => $data['adress'],
         ]);
         return User::create([
