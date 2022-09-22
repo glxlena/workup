@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
-class MenuTest extends TestCase
+class ProductTest extends TestCase
 {
   use RefreshDatabase;
   protected function setUp(): void
@@ -35,35 +35,36 @@ class MenuTest extends TestCase
      *
      * @return void
      */
-    public function test_should_show_index_menu_when_authenticated()
+    public function test_should_show_index_product_when_autenticated()
     {
-        $response = $this->get('/menu');
+        $response = $this->get('/product');
 
         $response->assertOk()
-          ->assertViewIs('menus.cardapios')
-          ->assertSeeText('Gerenciamento de Cardápios');
+            ->assertViewIs('products.produtos')
+            ->assertSeeText('Gerenciamento de Produtos');
     }
 
-    public function test_shouldnt_create_menu_when_invalid_data()
+    public function test_shouldnt_create_product_when_invalid_data()
     {
-        $response = $this->post('/menu');
+        $response = $this->post('/product');
 
-        $response->assertRedirect()
-          ->assertInvalid(['name']);
+        $response->assertredirect()
+            ->assertInvalid(['name']);
     }
 
-    public function test_should_create_menu_when_valid_data()
+    public function test_should_create_product_when_valid_data()
     {
-        $response = $this->post('/menu', [
-          'name' => 'Cardápio de teste',
-          'description' => 'Descrição do Teste',
+        $response = $this->post('/product', [
+          'name' => 'Produto exemplo',
+          'description' => 'Exemplo de descrição de produto',
+          'price_cents' => '1450',
         ]);
 
         $response->assertRedirect()
           ->assertSessionHasNoErrors();
 
-        $this->assertDatabaseHas('menus', [
-            'name' => 'Cardápio de teste',
+        $this->assertDatabaseHas('products', [
+          'name' => 'Produto exemplo',
         ]);
     }
-  }
+}

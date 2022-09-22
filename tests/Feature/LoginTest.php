@@ -8,6 +8,36 @@ use Tests\TestCase;
 
 class LoginTest extends TestCase
 {
+    use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+      parent::setUp();
+
+      $this->post('/register', [
+        'name' => 'Helena',
+        'email' => 'lena.oli1102@gmail.com',
+        'password' => '12345678',
+        'password_confirmation' => '12345678',
+        'company_name' => 'example',
+        'trading_name' => 'example LTDA',
+        'adress' => 'rua tal',
+        'phone' => '6723476346',
+        'cnpj' => '53628746',
+      ]);
+      \Auth::logout();
+    }
+
+    public function test_should_login_when_valid_data()
+    {
+      $response = $this->post('/login', [
+        'email' => 'lena.oli1102@gmail.com',
+        'password' =>  \Hash::make('12345678'),
+        'remember' => 'on',
+      ]);
+      $response->assertSessionHasNoErrors();
+      // $this->assertAuthenticated();
+    }
     /**
      * A basic feature test example.
      *
