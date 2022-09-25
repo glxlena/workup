@@ -57,7 +57,8 @@ class ProductTest extends TestCase
         $response = $this->post('/product', [
           'name' => 'Produto exemplo',
           'description' => 'Exemplo de descrição de produto',
-          'price_cents' => '1450',
+          'price' => '1450',
+          'is_available' => '1',
         ]);
 
         $response->assertRedirect()

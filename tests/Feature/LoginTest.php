@@ -16,11 +16,14 @@ class LoginTest extends TestCase
 
       $this->post('/register', [
         'name' => 'Helena',
+        'type'=> 'Gerente',
+        'cpf' => '12345678901',
         'email' => 'lena.oli1102@gmail.com',
         'password' => '12345678',
         'password_confirmation' => '12345678',
         'company_name' => 'example',
         'trading_name' => 'example LTDA',
+        'company_phone' => '0987654321',
         'adress' => 'rua tal',
         'phone' => '6723476346',
         'cnpj' => '53628746',
@@ -32,11 +35,11 @@ class LoginTest extends TestCase
     {
       $response = $this->post('/login', [
         'email' => 'lena.oli1102@gmail.com',
-        'password' =>  \Hash::make('12345678'),
+        'password' => '12345678',
         'remember' => 'on',
       ]);
       $response->assertSessionHasNoErrors();
-      // $this->assertAuthenticated();
+      $this->assertAuthenticated();
     }
     /**
      * A basic feature test example.
