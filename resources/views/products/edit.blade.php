@@ -18,9 +18,7 @@
 <div class="d-flex flex-row gap-2">
   <label for="inputpreco" class="form-label">Preço</label>
   <input name="price" type="number" id="inputpreco" class="form-control" value="{{($product->price_cents)/100}}">
-</div>
-<br>
-<div class="d-flex flex-row gap-3">Disponibilidade
+
   <select class="form-select" name="is_available" aria-label="Default select example">
     <option value="1" @if($product->is_available) selected @endif>Disponível</option>
     <option value="0" @if (!$product->is_available) selected @endif>Indisponível</option>

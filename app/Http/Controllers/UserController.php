@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Requests\UserRequest;
 class UserController extends Controller
 {
     /**
@@ -13,7 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::where('establishment_id', \Auth::user()->establishment_id)->get();
         return view('users.funcionarios',['users'=>$users]);
     }
 
@@ -33,8 +34,9 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
+        $data = $request->validated();
         $data = $request->all();
         $data['password'] = \Hash::make($data['password']);
         $user=User::create($data);

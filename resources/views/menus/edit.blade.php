@@ -31,6 +31,7 @@
       <div class="d-flex flex-row-reverse gap-2">
       <button type="submit" class="btn btn-warning">Alterar</button>
       <a href="{{route('menu.index')}}" type="button" class="btn btn-info"><i class="bi bi-skip-backward-circle"></i></a>
+</form>
     </div>
     </div>
   </div>

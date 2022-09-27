@@ -19,7 +19,6 @@ class MenuController extends Controller
         $establishment_id = \Auth::user()->establishment_id;
         $menus = Menu::where('establishment_id', $establishment_id)
                     ->get();
-
         return view('menus.cardapios', ['menus'=> $menus]);
     }
 
@@ -47,6 +46,7 @@ class MenuController extends Controller
     public function store(MenuRequest $request)
     {
         $data = $request->all();
+      $data['establishment_id'] = \Auth::user()->establishment_id;
          Menu::create($data);
          return redirect()->route('menu.index');
     }

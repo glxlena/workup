@@ -8,14 +8,14 @@ use App\Models\Establishment;
 class EstablishmentController extends Controller
 {
 
-    public function store(Request $request)
+    public function show(Establishment $establishment)
     {
-        //
+        return view('establishments.empresa', ['establishment'=>$establishment]);
     }
 
-    public function edit($id)
+    public function edit(Establishment $establishment)
     {
-        //
+        return view('establishments.edit', ['establishment'=>$establishment]);
     }
 
     /**
@@ -25,9 +25,11 @@ class EstablishmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Establishment $establishment)
     {
-        //
+        $data = $request->all();
+        $establishment->update($data);
+        return redirect()->route('establishment.show',$establishment);
     }
 
 }

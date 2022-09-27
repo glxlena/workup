@@ -14,6 +14,7 @@
               <tr>
                 <th scope="col">Título</th>
                 <th scope="col">Descrição</th>
+                <th scope="col">QRCode</th>
                 <th scope="col">Link</th>
                 <th scope="col">Status</th>
                 <th scope="col">Editar</th>
@@ -26,7 +27,8 @@
               <tr>
                 <td>{{$menu->name}}</td>
                 <td>{{$menu->description}}</td>
-                <td><button type="button" data-bs-toggle="modal" data-bs-target="#linkModal" class="btn btn-info"><i class="bi bi-link"></i></button></td>
+                <td><button type="button" data-bs-toggle="modal" data-bs-target="#linkModal" class="btn btn-info"><i class="bi bi-qr-code"></i></button></td>
+                <td><a href="{{route('menu.public.show', $menu->id)}}" type="button" class="btn btn-info"><i class="bi bi-link"></i></a></td>
                 <td>{{$menu->is_active ? 'Ativo' : 'Inativo'}}</td>
                 <td><a href="menu/{{$menu->id}}/edit" type="button" class="btn btn-info"><i class="bi bi-pencil"></i></a></td>
                 <td><a href="{{route('menu.show', $menu->id)}}" type="button" class="btn btn-info"><i class="bi bi-eye"></i></a></td>
@@ -39,13 +41,12 @@
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Link Compartilhável</h5>
+                      <h5 class="modal-title" id="exampleModalLabel">QRCode Compartilhável</h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body row gap-2">
                       <img src="https://chart.googleapis.com/chart?cht=qr&chs=400x400&chl={{urlencode(route('menu.public.show', $menu->id))}}" >
                     </div>
-                    <a href="{{route('menu.public.show', $menu->id)}}">Acesse Aqui</a>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Fechar</button>
                     </div>

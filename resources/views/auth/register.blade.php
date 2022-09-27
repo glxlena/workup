@@ -16,22 +16,47 @@
           <div class="col-6">
             <label for="inputName" class="form-label">Nome da Empresa</label>
             <input name="company_name" type="text" class="form-control" id="inputAddress2" placeholder="">
+            @error('company_name')
+            <div class="text-danger">
+              {{$message}}
+            </div>
+            @enderror
           </div>
           <div class="col-md-6">
             <label for="inputTrading" class="form-label">Razão Social</label>
             <input name="trading_name" type="text" class="form-control" id="inputCity">
+            @error('trading_name')
+            <div class="text-danger">
+              {{$message}}
+            </div>
+            @enderror
           </div>
           <div class="col-6">
             <label for="inputCnpj" class="form-label">CNPJ</label>
             <input name="cnpj" type="text" class="form-control" id="inputAddress2" placeholder="">
+            @error('cnpj')
+            <div class="text-danger">
+              {{$message}}
+            </div>
+            @enderror
           </div>
           <div class="col-md-6">
             <label for="inputPhone" class="form-label">Telefone</label>
             <input name="company_phone" type="text" class="form-control" id="inputCity">
+            @error('company_phone')
+            <div class="text-danger">
+              {{$message}}
+            </div>
+            @enderror
           </div>
           <div class="col-12">
             <label for="inputAddress" class="form-label">Endereço</label>
             <input name="adress" type="text" class="form-control" id="inputAddress" placeholder="">
+            @error('adress')
+            <div class="text-danger">
+              {{$message}}
+            </div>
+            @enderror
           </div>
           <br>
           <h2> Cadastro de Usuário</h2>
@@ -39,30 +64,45 @@
               <label for="inputUsuario" class="form-label">Nome</label>
               <input name="name" type="text" id="inputUsuario" class="form-control">
               @error('name')
-                  <span class="invalid-feedback" role="alert">
-                      <strong>{{ $message }}</strong>
-                  </span>
+              <div class="text-danger">
+                {{$message}}
+              </div>
               @enderror
               <label for="inputtel" class="form-label">Telefone</label>
               <input name="phone" type="text" id="inputel" class="form-control">
+              @error('phone')
+              <div class="text-danger">
+                {{$message}}
+              </div>
+              @enderror
               <label for="inputcpf" class="form-label">CPF</label>
               <input name="cpf" type="text" id="inputcpf" class="form-control">
+              @error('cpf')
+              <div class="text-danger">
+                {{$message}}
+              </div>
+              @enderror
             </div>
             <br>
             <div class="d-flex flex-row gap-2">
               <label for="inputEmail" class="form-label">Email</label>
               <input name="email" type="text" id="inputEmail" class="form-control">
               @error('email')
-                  <span class="invalid-feedback" role="alert">
-                      <strong>{{ $message }}</strong>
-                  </span>
+              <div class="text-danger">
+                {{$message}}
+              </div>
               @enderror
               <label for="exampleInputSenha" class="form-label">Senha</label>
               <input name="password" type="password" class="form-control" id="exampleInputSenha">
+              @error('password')
+              <div class="text-danger">
+                {{$message}}
+              </div>
+              @enderror
             </div>
             <div class="d-flex flex-row gap-2">
               <label for="password-confirm" class="form-label">Confirmar Senha</label>
-              <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+              <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
               <label for="inputType" class="form-label">Tipo de Usuário</label>
               <select name="type" id="inputType" class="form-select">
                 <option value="Gerente">Gerente</option>

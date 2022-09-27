@@ -17,7 +17,7 @@
           <div class="navbar-nav">
             <a class="nav-link active" aria-current="page" href="{{route('product.index')}}"><i class="bi bi-list-ul">Produtos</i></a>
             <a class="nav-link" href="{{route('user.index')}}"><i class="bi bi-people">Usuários</i></a>
-            <a class="nav-link" href="establishment"><i class="bi bi-house">Dados da Empresa</i></a>
+            <a class="nav-link" href="{{route('establishment.show', \Auth::user()->establishment_id)}}"><i class="bi bi-house">Dados da Empresa</i></a>
             </div>
           </div>
             <div class="d-flex flex-row-reverse navibar-nav">
@@ -31,9 +31,9 @@
                         <a class="nav-link" href="{{ route('register') }}">{{ __('Cadastro') }}</a>
                 @endif
             @else
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre><i class="bi bi-person">
                         {{ Auth::user()->name }}
-                    </a>
+                    </i></a>
 
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ route('logout') }}"

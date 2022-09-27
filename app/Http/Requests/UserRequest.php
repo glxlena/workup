@@ -27,6 +27,8 @@ class UserRequest extends FormRequest
             'name' => 'required|min:2|max:150',
             'email' => 'required',
             'password' => 'required|min:8',
+            'cpf' => 'required|min:8',
+            'phone' => 'required',
         ];
     }
 }

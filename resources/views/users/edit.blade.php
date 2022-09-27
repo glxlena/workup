@@ -24,7 +24,7 @@
   <label for="inputlogin" class="form-label">Email</label>
   <input name="email" type="text" id="inputlogin" class="form-control" value="{{$user->email}}">
   <label for="exampleInputSenha" class="form-label">Senha</label>
-  <input name="password" type="password" class="form-control" id="exampleInputSenha" value="$user->password">
+  <input name="password" type="password" class="form-control" id="exampleInputSenha" value="{{$user->password}}">
 </div>
 <br>
 <div class="d-flex flex-row gap-2">
@@ -39,6 +39,7 @@
 <button type="submit" class="btn btn-warning">Alterar</button>
 <a href="{{route('user.index')}}" type="button" class="btn btn-info"><i class="bi bi-skip-backward-circle"></i></a>
 </div>
+</form>
 </div>
 </div>
 @endsection
