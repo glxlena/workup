@@ -9,24 +9,22 @@
           @method('PUT')
         <h3>Alterar Dados da Empresas </h3>
         <div class="d-flex flex-row gap-1">
-          <label for="inputAddress2" class="form-label">CNPJ</label>
-          <input type="text" class="form-control" id="inputAddress2" value="{{$establishment->cnpj}}">
-          <label for="inputCity" class="form-label">Razão Social</label>
-          <input type="text" class="form-control" id="inputCity" value="{{$establishment->trading_name}}">
-        </div>
-        <br>
-        <div class="d-flex flex-row gap-1">
           <label for="inputAddress2" class="form-label">Nome da Empresa</label>
-          <input type="text" class="form-control" id="inputAddress2" value="{{$establishment->company_name}}">
-          <label for="inputCity" class="form-label">Telefone</label>
-          <input type="text" class="form-control" id="inputCity" value="{{$establishment->company_phone}}">
+          <input type="text" name="company_name" class="form-control" id="inputAddress2" value="{{$establishment->company_name}}">
+          <label for="inputCity" class="form-label">Razão Social</label>
+          <input type="text" name="trading_name" class="form-control" id="inputCity" value="{{$establishment->trading_name}}">
         </div>
         <br>
         <div class="d-flex flex-row gap-1">
-          <label for="inputAddress2" class="form-label">Gerente responsável</label>
-          <input type="text" class="form-control" id="inputAddress2">
+          <label for="inputAddress2" class="form-label">CNPJ</label>
+          <input type="text" name="cnpj" class="form-control" id="inputAddress2" value="{{$establishment->cnpj}}">
+          <label for="inputCity" class="form-label">Telefone</label>
+          <input type="text" name="phone" class="form-control" id="inputCity" value="{{$establishment->phone}}">
+        </div>
+        <br>
+        <div class="d-flex flex-row gap-1">
           <label for="inputAddress" class="form-label">Endereço</label>
-          <input type="text" class="form-control" id="inputAddress" value="{{$establishment->adress}}">
+          <input type="text" name="adress" class="form-control" id="inputAddress" value="{{$establishment->adress}}">
         </div>
         <br>
         <div class="d-flex flex-row-reverse gap-2">

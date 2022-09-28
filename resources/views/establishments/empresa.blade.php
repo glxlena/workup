@@ -7,24 +7,20 @@
     <form class="row g-3">
       <h3>Dados da Empresas </h3>
       <div class="col-6">
-        <label for="inputAddress2" class="form-label">CNPJ</label>
-        <input type="text" class="form-control" id="inputAddress2" value="{{$establishment->cnpj}}" disabled>
+        <label for="inputAddress2" class="form-label">Nome da Empresa</label>
+        <input type="text" class="form-control" id="inputAddress2" value="{{$establishment->company_name}}" disabled>
       </div>
       <div class="col-md-6">
         <label for="inputCity" class="form-label">Razão Social</label>
         <input type="text" class="form-control" id="inputCity" value="{{$establishment->trading_name}}" disabled>
       </div>
       <div class="col-6">
-        <label for="inputAddress2" class="form-label">Nome da Empresa</label>
-        <input type="text" class="form-control" id="inputAddress2" value="{{$establishment->company_name}}" disabled>
+        <label for="inputAddress2" class="form-label">CNPJ</label>
+        <input type="text" class="form-control" id="inputAddress2" value="{{$establishment->cnpj}}" disabled>
       </div>
       <div class="col-md-6">
         <label for="inputCity" class="form-label">Telefone</label>
         <input type="text" class="form-control" id="inputCity" value="{{$establishment->phone}}" disabled>
-      </div>
-      <div class="col-12">
-        <label for="inputAddress2" class="form-label">Gerente responsável</label>
-        <input type="text" class="form-control" id="inputAddress2" disabled>
       </div>
       <div class="col-12">
         <label for="inputAddress" class="form-label">Endereço</label>
