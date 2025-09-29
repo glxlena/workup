@@ -14,22 +14,16 @@ return new class extends Migration
     public function up()
 {
     Schema::table('users', function (Blueprint $table) {
-        // Primeiro remove a foreign key
         $table->dropForeign(['establishment_id']);
-
-        // Depois remove a coluna
         $table->dropColumn('establishment_id');
     });
 }
 
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('password_resets');
-    }
+public function down()
+{
+    Schema::table('users', function (Blueprint $table) {
+        $table->unsignedBigInteger('establishment_id')->nullable();
+    });
+}
 };

@@ -5,81 +5,75 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
-use App\Models\Establishment;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
     use RegistersUsers;
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
     protected $redirectTo = RouteServiceProvider::HOME;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
     protected function validator(array $data)
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
+            'birth_date' => ['required', 'date', 'before_or_equal:' . now()->subYears(16)->format('Y-m-d')],
+            'person_type' => ['required', 'in:física,jurídica'],
+            'cpf' => ['required_if:person_type,física', 'nullable', 'string', 'max:14', 'unique:users'],
+            'cnpj' => ['required_if:person_type,jurídica', 'nullable', 'string', 'max:18', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8'],
+            'phone' => ['required', 'string', 'max:20'],
+            'state' => ['required', 'string', 'max:2'],
+            'city' => ['required', 'string', 'max:255'],
+            'photo' => ['nullable', 'image', 'max:2048'],
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'confirmed',
+                'regex:/[a-z]/',
+                'regex:/[A-Z]/',
+                'regex:/[0-9]/',
+                'regex:/[@$!%*#?&]/',
+            ],
+        ], [
+            'password.regex' => 'Formato de senha inválido.',
+            'password.confirmed' => 'Senhas diferentes.',
+            'cpf.unique' => 'CPF já cadastrado.',
+            'cnpj.unique' => 'CNPJ já cadastrado.',
+            'email.unique' => 'Email já cadastrado.',
+            'phone.unique' => 'Telefone já cadastrado.',
+            'birth_date.before_or_equal' => 'Você deve ter pelo menos 18 anos.',
+
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
-     */
     protected function create(array $data)
     {
-        $establishment = Establishment::create([
-          'cnpj' => $data['cnpj'],
-          'trading_name' => $data['trading_name'],
-          'company_name' => $data['company_name'],
-          'phone' => $data['company_phone'],
-          'adress' => $data['adress'],
-        ]);
+        $photoPath = null;
+        if (isset($data['photo'])) {
+            $photoPath = $data['photo']->store('photos', 'public');
+        }
+
         return User::create([
             'name' => $data['name'],
+            'birth_date' => $data['birth_date'],
+            'person_type' => $data['person_type'],
+            'cpf' => $data['cpf'] ?? null,
+            'cnpj' => $data['cnpj'] ?? null,
             'email' => $data['email'],
-            'password' => \Hash::make($data['password']),
-            'type' => $data['type'],
-            'cpf' => $data['cpf'],
             'phone' => $data['phone'],
-            'establishment_id' => $establishment->id,
+            'state' => $data['state'],
+            'city' => $data['city'],
+            'photo' => $photoPath,
+            'password' => Hash::make($data['password']),
         ]);
     }
 }

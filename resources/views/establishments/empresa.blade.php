@@ -2,7 +2,7 @@
 @section ('title', 'Dados da Empresa')
 @section ('base')
 <br>
-  <div class="d-flex w-100 position-absolute justify-content-center align-items-start">
+  <div class="d-flex w-100 position-absolute justify-content-center align-items-start bg">
     <div class="p-4 w-100 m-4 bg-light rounded">
     <form class="row g-3">
       <h3>Dados da Empresas </h3>

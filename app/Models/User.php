@@ -21,10 +21,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'type',
+        'birth_date',
+        'person_type',
         'cpf',
+        'cnpj',
         'phone',
-        'establishment_id',
+        'state',
+        'city',
+        'photo',
     ];
 
     /**
@@ -46,13 +50,29 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-//Definindo relacionamento entre usuários e estabelecimento
-//em que um usuário pertence a um estabelecimento
-public function establishment()
-{
-  return $this->belongsTo(Establishment::class);
-}
-public function type(){
-return $this->type=='manager' ? 'Gerente' : 'Funcionário';
-}
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function reviewsGiven()
+    {
+        return $this->hasMany(UserReview::class, 'reviewer_id');
+    }
+
+    public function reviewsReceived()
+    {
+        return $this->hasMany(UserReview::class, 'reviewed_id');
+    }
+
+    public function averageRating()
+    {
+        return $this->reviewsReceived()->avg('rating');
+    }
+
+    public function favorites()
+    {
+        return $this->belongsToMany(Post::class, 'favorites', 'user_id', 'post_id');
+    }
+
 }

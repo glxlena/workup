@@ -21,9 +21,14 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-            $table->string('type')->default('employee');
             $table->string('cpf')->nullable();
             $table->string('phone')->nullable();
+            $table->date('birth_date')->nullable(); 
+            $table->enum('person_type', ['física', 'jurídica']);
+            $table->string('cnpj')->nullable();
+            $table->string('state')->nullable();
+            $table->string('city')->nullable();
+            $table->string('photo')->nullable();
         });
     }
 

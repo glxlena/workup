@@ -12,16 +12,11 @@ return new class extends Migration
      * @return void
      */
     public function up()
-{
-    Schema::table('users', function (Blueprint $table) {
-        // Primeiro remove a foreign key
-        $table->dropForeign(['establishment_id']);
-
-        // Depois remove a coluna
-        $table->dropColumn('establishment_id');
-    });
-}
-
+    {
+        Schema::table('posts', function (Blueprint $table) {
+            $table->string('niche')->nullable()->after('description');
+        });
+    }
 
     /**
      * Reverse the migrations.
@@ -30,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('password_resets');
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropColumn('niche');
+        });
     }
 };
