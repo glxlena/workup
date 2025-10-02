@@ -69,7 +69,7 @@
           </select>
           @error('city') <div class="text-danger">{{ $message }}</div> @enderror
         </div>
-        <br>
+        
         <div class="col-md-6">
           <label for="password" class="form-label">Senha</label>
           <input name="password" type="password" class="form-control" id="password" required>
@@ -94,7 +94,7 @@
             <input name="password_confirmation" type="password" class="form-control" id="password_confirmation" required>
         </div>
         <div class="col-12 d-flex justify-content-center mt-3">
-          <button type="submit" class="btn indigo">Cadastrar</button>
+          <button type="submit" class="btn indigo">Enviar</button>
         </div>
         <div class="col-12 d-flex justify-content-center mt-2">
           <a href="{{ route('login') }}">Voltar</a>
