@@ -10,7 +10,59 @@
                 <div>{{ session('success') }}</div>
             </div>
         @endif
+        <div id="marketingCarousel" class="carousel slide mb-4 rounded overflow-hidden" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#marketingCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#marketingCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#marketingCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#marketingCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            </div>
+            <div class="carousel-inner" style="height: 150px;">
+                <div class="carousel-item active" data-bs-interval="5000" style="background-color: #663399;">
+                    <div class="d-flex align-items-center h-100 p-4">
+                        <h1 class="text-white col-9" style="font-weight: 500;">Encontre o freelancer certo para o seu projeto em poucos cliques!</h1>
+                        <div class="col-3 text-end">
+                            <img src="{{ asset('images/logo_branca_pequena.png') }}" alt="Logo Branca" style="height: 60px; width: auto;">
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item" data-bs-interval="5000" style="background-color: #ffffff;">
+                    <div class="d-flex align-items-center h-100 p-4">
+                        <h1 class="col-9" style="font-weight: 500; color: #663399">Divulgue serviços e conquiste novos clientes sem complicação!</h1>
+                        <div class="col-3 text-end">
+                            <img src="{{ asset('images/logo_pequena.png') }}" alt="Logo Colorida" style="height: 60px; width: auto;">
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item" data-bs-interval="5000" style="background-color: #663399;">
+                    <div class="d-flex align-items-center h-100 p-4">
+                        <h1 class="text-white col-9" style="font-weight: 500;">Serviços organizados, contratos simples e agilidade na contratação!</h1>
+                        <div class="col-3 text-end">
+                            <img src="{{ asset('images/logo_branca_pequena.png') }}" alt="Logo Branca" style="height: 60px; width: auto;">
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item" data-bs-interval="5000" style="background-color: #ffffff;">
+                    <div class="d-flex align-items-center h-100 p-4">
+                        <h1 class="col-9" style="font-weight: 500; color: #663399">Sua rede de freelancers começa aqui!</h1>
+                        <div class="col-3 text-end">
+                            <img src="{{ asset('images/logo_pequena.png') }}" alt="Logo Colorida" style="height: 60px; width: auto;">
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <button class="carousel-control-prev" type="button" data-bs-target="#marketingCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#marketingCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <!-- filtros -->
         <form method="GET" action="{{ route('home') }}">
             <div class="row g-3 mb-4 justify-content-center align-items-center">
                 <div class="col-md-3 col-sm-6">
@@ -55,48 +107,73 @@
             </div>
         </form>
         <br>
-        
+
+        <!-- posts -->
         <div class="container mt-4">
             <div class="row">
                 @forelse ($posts as $post)
                     <div class="col-md-4 mb-4">
                         <div class="card h-100 sombrinha">
                             <div class="card-body d-flex flex-column">
-                                <h5 class="card-title">{{ $post->title }}</h5>
-                                <p class="card-text">{{ \Illuminate\Support\Str::limit($post->description, 50, '...') }}</p>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <div class="d-flex align-items-center">
+                                        @if($post->user && $post->user->photo)
+                                            <img src="{{ asset('storage/' . $post->user->photo) }}" 
+                                                alt="Foto de {{ $post->user->name }}" 
+                                                class="rounded-circle me-2" 
+                                                style="width: 40px; height: 40px; object-fit: cover;">
+                                        @else
+                                            <i class="bi bi-person-circle fs-3 me-2"></i>
+                                        @endif
+                                        <a href="{{ route('user.show', $post->user->id) }}" 
+                                           class="fw-semibold text-decoration-none text-dark">
+                                            {{ $post->user->name ?? 'Desconhecido' }}
+                                        </a>
+                                    </div>
+                                    <small class="text-muted">
+                                        {{ $post->created_at->format('d/m/Y H:i') }}
+                                    </small>
+                                </div>
+
+                                <h5 class="card-title fw-bold text-dark mb-2">{{ $post->title }}</h5>
+                                <p class="card-text text-secondary mb-3">
+                                    {!! nl2br(e(\Illuminate\Support\Str::limit($post->description, 20, '...'))) !!}
+                                </p>
+                                <p class="text-muted mb-3"><strong>{{ $post->niche ?? 'Não informado' }} - {{ ucfirst($post->post_type) }}</strong></p>
+
                                 <div class="mt-auto">
-                                    <p class="text-muted mb-1"><strong>Categoria:</strong> {{ $post->niche ?? 'Não informado' }}</p>
-                                    <p class="text-muted"><strong>{{ $post->user->name ?? 'Desconhecido' }} - {{ ucfirst($post->post_type) }}</strong></p>
-                                    <p class="text-muted">{{ $post->user->city ?? 'Não informado' }} - {{ $post->user->state ?? 'Não informado' }}</p>
-                                    <p class="text-muted"><small>Postado em {{ $post->created_at->format('d/m/Y H:i') }}</small></p>
-                                    
                                     <a href="#"
-                                        class="btn indigo mt-auto"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#postModal"
-                                        data-id="{{ $post->id }}"
-                                        data-title="{{ $post->title }}"
-                                        data-description="{{ $post->description }}"
-                                        data-type="{{ ucfirst($post->post_type) }}"
-                                        data-niche="{{ $post->niche }}"
-                                        data-city="{{ $post->user->city }}"
-                                        data-state="{{ $post->user->state }}"
-                                        data-user-id="{{ $post->user->id }}"
-                                        data-user-name="{{ $post->user->name }}"
-                                        data-profile-url="{{ route('user.show', $post->user->id) }}"
-                                        data-auth-id="{{ auth()->id() }}"
-                                        data-is-favorited="{{ $post->is_favorited ? 1 : 0 }}">
+                                       class="btn indigo mt-auto"
+                                       data-bs-toggle="modal"
+                                       data-bs-target="#postModal"
+                                       data-id="{{ $post->id }}"
+                                       data-title="{{ $post->title }}"
+                                       data-description="{{ $post->description }}"
+                                       data-type="{{ ucfirst($post->post_type) }}"
+                                       data-niche="{{ $post->niche }}"
+                                       data-city="{{ $post->user->city }}"
+                                       data-state="{{ $post->user->state }}"
+                                       data-user-id="{{ $post->user->id }}"
+                                       data-user-name="{{ $post->user->name }}"
+                                       data-user-photo="{{ $post->user->photo ? asset('storage/' . $post->user->photo) : '' }}"
+                                       data-profile-url="{{ route('user.show', $post->user->id) }}"
+                                       data-auth-id="{{ auth()->id() }}"
+                                       data-is-favorited="{{ $post->is_favorited ? 1 : 0 }}"
+                                       data-created-at="{{ $post->created_at }}"
+                                       data-images='@json($post->images->map(fn($img) => asset("storage/" . $img->path)))'
+                                       data-contact-url="{{ route('messages.contact', $post->user->id) }}">
                                         Ver mais
                                     </a>
-
                                 </div>
                             </div>
                         </div>
                     </div>
                 @empty
-                    <p class="phrases">Não há nenhuma postagem até agora :(</p>
+                <p class="d-flex justify-content-center text-muted"><i class="bi bi-view-list" style="font-size: 80px;"></i></p>
+                <p class="phrases text-center">Não há nenhuma postagem até agora.</p>
                 @endforelse
             </div>
+
             <div class="d-flex justify-content-center mt-4">
                 {{ $posts->appends(request()->query())->links() }}
             </div>
@@ -104,32 +181,37 @@
     </div>
 </div>
 
+<!-- novo post -->
 <a href="{{ route('posts.create') }}" 
-    class="btn indigo btn-lg rounded position-fixed sombra2"
-    style="bottom: 30px; right: 30px; z-index: 999;">
-    Novo Post
+   class="btn indigo btn-lg rounded position-fixed sombra2"
+   style="bottom: 30px; right: 30px; z-index: 999;">
+   Novo Post
 </a>
 
+<!-- modal de post -->
 <div class="modal fade" id="postModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
-            <div class="modal-header d-flex justify-content-between align-items-center">
-                <h4 class="modal-title" id="postModalLabel"></h4>
-                <button type="button" id="favoriteBtn" class="btn btn-link text-danger fs-4 p-0 m-0" style="display: none;"></button>
-            </div>
-            
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-8">
-                        <h5 id="modalPostDescription"></h5>
-                        <p class="text-muted"><strong>Categoria:</strong> <span id="modalPostNiche"></span></p>
-                        <p class="text-muted"><strong><span id="modalPostType"></span> / <span id="modalPostCity"></span> - <span id="modalPostState"></span></strong></p>
+        <div class="modal-header d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <div id="modalUserPhotoContainer" class="me-2">
+                        <i class="bi bi-person-circle fs-3"></i>
+                    </div>
+                    <div>
+                        <a href="#" id="modalUserProfile" class="fw-bold text-dark text-decoration-none"></a> <small id="modalCreatedAt" class="text-muted"></small><br>
+                        <p class="text-muted mb-1"><strong><span id="modalPostNiche"></span> - <span id="modalPostType"></span></strong></p>
                     </div>
                 </div>
-                <br>
-                <p class="d-flex justify-content-center"><a href="#" id="modalUserProfile"></a></p>
+                <button type="button" id="favoriteBtn" class="btn btn-link text-danger fs-4 p-0 m-0" style="display: none;"></button>
             </div>
-            
+            <div class="modal-body">
+                <h4 id="postModalLabel" class="fw-bold mb-3"></h4>
+                <p id="modalPostDescription" class="text-dark" style="text-align: justify;"></p>
+                <div id="modalPostImages" class="d-flex flex-wrap gap-2 mt-3 justify-content-center"></div>
+                <div class="mt-3 d-flex justify-content-center">
+                    <p class="text-muted mb-0"><span id="modalPostCity"></span> - <span id="modalPostState"></span></p>
+                </div>
+            </div>
             <div class="modal-footer d-flex justify-content-center">
                 <button type="button" id="modalActionBtn" class="btn indigo"></button>
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -138,10 +220,22 @@
     </div>
 </div>
 
+<!-- modal de imagem do post -->
+<div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content bg-light border-0">
+            <div class="modal-header">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0 text-center">
+                <img id="previewImage" src="" class="img-fluid rounded" style="max-height: 80vh; object-fit: contain;">
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     async function loadStates() {
-        // ... (Seu código do IBGE) ...
         const stateSelect = document.getElementById('state');
         const citySelect = document.getElementById('city');
         const response = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados');
@@ -169,7 +263,7 @@
             });
         });
 
-        const oldState = "{{ old('state') ?? request('state') }}"; // MANTIDO PARA RE-SELEÇÃO DE FILTROS
+        const oldState = "{{ old('state') ?? request('state') }}";
         const oldCity = "{{ old('city') ?? request('city') }}";
         if (oldState) {
             stateSelect.value = oldState;
@@ -186,5 +280,42 @@
     }
 
     loadStates();
+
+//modal de imagens
+    document.addEventListener('DOMContentLoaded', function () {
+    const postModal = document.getElementById('postModal');
+    const modalPostImages = document.getElementById('modalPostImages');
+    const imagePreviewModal = new bootstrap.Modal(document.getElementById('imagePreviewModal'));
+    const previewImage = document.getElementById('previewImage');
+
+    postModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        if (!button) return;
+
+        const imagesData = JSON.parse(button.getAttribute('data-images') || '[]');
+        modalPostImages.innerHTML = '';
+
+        if (imagesData.length > 0) {
+            imagesData.forEach(src => {
+                const img = document.createElement('img');
+                img.src = src;
+                img.classList.add('rounded', 'border');
+                img.style.width = '150px';
+                img.style.height = '150px';
+                img.style.objectFit = 'cover';
+                img.style.cursor = 'pointer';
+                img.title = "Clique para ampliar";
+
+                // ao clicar, abre o modal grande
+                img.addEventListener('click', () => {
+                    previewImage.src = src;
+                    imagePreviewModal.show();
+                });
+
+                modalPostImages.appendChild(img);
+            });
+        }
+    });
+});
 </script>
 @endsection

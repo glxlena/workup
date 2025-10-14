@@ -50,27 +50,51 @@
         @enderror
       </div>
 
+      <br>
       <div class="mb-3">
-        <label for="imageInput" class="form-label">Fotos (opcional)</label><br>
-        <label for="imageInput" class="btn btn-outline-secondary d-flex align-items-center" style="gap: 8px; cursor: pointer;">
-          <i class="bi bi-plus-square" style="font-size: 1.5rem;"></i> Selecionar Imagem
+        <label class="form-label">Fotos Atuais (Máx. 5):</label>
+        <div id="existingImagesContainer" class="d-flex flex-wrap gap-2 mb-3">
+            @foreach($post->images as $image)
+                <div class="image-wrapper" id="image-{{ $image->id }}" style="position: relative; width: 100px; height: 100px;">
+                    <img src="{{ asset('storage/' . $image->path) }}" alt="Foto {{ $image->id }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px;">
+                    <button type="button" 
+                            class="btn-remove-image" 
+                            data-image-id="{{ $image->id }}"
+                            onclick="markImageForRemoval({{ $image->id }})"
+                            style="position: absolute; top: -10px; right: -10px; background: rgba(255,0,0,0.8); border:none; color: white; border-radius: 50%; width: 24px; height: 24px; font-size: 1rem; cursor: pointer; line-height: 1;">×</button>
+                </div>
+            @endforeach
+        </div>
+      </div>
+      
+      <div id="removedImagesInputs">
+      </div>
+
+      <br>
+      <div class="mb-3">
+        <label for="newImagesInput" class="form-label">Adicionar Novas Fotos (opcional)</label><br>
+        <label for="newImagesInput" class="btn btn-outline-secondary d-flex align-items-center" style="gap: 8px; cursor: pointer;">
+          <i class="bi bi-plus-square" style="font-size: 1.5rem;"></i> Selecionar Novas Imagens
         </label>
-        <input class="form-control d-none" type="file" id="imageInput" name="image" accept="image/*" onchange="previewImage(event, 'imagePreviewEdit')">
-        @error('image')
+        <input class="form-control d-none" 
+              type="file" 
+              id="newImagesInput" 
+              name="new_images[]" 
+              accept="image/*" 
+              multiple 
+              onchange="previewMultipleImages(event, 'newImagesPreview')">
+        
+        @error('new_images')
           <div class="text-danger">{{ $message }}</div>
+        @enderror
+        @error('new_images.*')
+            <div class="text-danger">Erro em uma das novas imagens: {{ $message }}</div>
         @enderror
       </div>
 
-      <div id="imagePreviewEdit" style="position: relative; max-width: 200px;">
-        @if($post->image_path)
-          <div id="currentImage" style="position: relative; display: inline-block;">
-            <img src="{{ asset('storage/' . $post->image_path) }}" alt="Imagem atual" style="max-width: 100%; border-radius: 5px;">
-            <button type="button" onclick="removeCurrentImage()" style="position: absolute; top: 5px; right: 5px; background: rgba(255,0,0,0.7); border:none; color: white; border-radius: 50%; width: 24px; height: 24px; cursor: pointer;">×</button>
-          </div>
-        @endif
+      <div id="newImagesPreview" class="d-flex flex-wrap gap-2 mb-3">
       </div>
 
-      <input type="hidden" name="remove_image" id="removeImageInput" value="0">
 
       <div class="d-flex justify-content-between mt-4">
         <a href="{{ route('posts.userPosts') }}" class="btn btn-outline-secondary">Voltar</a>
@@ -79,8 +103,8 @@
     </form>
   </div>
 </div>
- 
-<!--modal de confirmação-->
+  
+<!--modal de confirmação de edição-->
 <div id="confirmationModal" class="modal-confirmation" style="display:none;">
   <div class="modal-content modalEdit">
     <p>Tem certeza que deseja alterar?</p>

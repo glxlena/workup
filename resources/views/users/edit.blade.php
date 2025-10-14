@@ -41,13 +41,13 @@
         {{-- Foto ou ícone --}}
         <div class="position-relative d-inline-block">
           @if ($user->photo)
-              <img id="photoPreview" src="{{ asset('storage/' . $user->photo) }}" 
-                  alt="Foto de {{ $user->name }}" 
-                  class="rounded-circle mb-3" 
-                  width="250" height="250">
-          @else
-              <i id="defaultIcon" class="bi bi-person-circle mb-3" style="font-size: 200px;"></i>
-              <img id="photoPreview" class="rounded-circle mb-3 d-none" width="250" height="250">
+            <img id="photoPreview" src="{{ asset('storage/' . $user->photo) }}"
+            alt="Foto de {{ $user->name }}"
+            class="rounded-circle mb-3"
+            width="250" height="250">
+           @else
+            <i id="defaultIcon" class="bi bi-person-circle mb-3" style="font-size: 200px;"></i>
+            <img id="photoPreview" class="rounded-circle mb-3 d-none" width="250" height="250">
           @endif
           <div class="dropdown position-absolute top-0 end-0">
               <button class="btn btn-sm btn-light dropdown-toggle" type="button" id="photoDropdown" data-bs-toggle="dropdown" aria-expanded="false"></button>
@@ -127,14 +127,14 @@
             <div class="col-md-6">
               <label for="state" class="form-label">Estado</label>
               <select name="state" id="state" class="form-select">
-                <option value="">Selecione o estado</option>
+                <option value="{{ $user->state }}"></option>
               </select>
             </div>
 
             <div class="col-md-6">
               <label for="city" class="form-label">Cidade</label>
               <select name="city" id="city" class="form-select">
-                <option value="">Selecione a cidade</option>
+                <option value="{{ $user->city }}"></option>
               </select>
             </div>
 
@@ -196,82 +196,170 @@
   </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-masker/1.1.0/vanilla-masker.min.js"></script>
 
 <script>
-  //preview da imagem
-  document.getElementById('photoInput').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const preview = document.getElementById('photoPreview');
-        const icon = document.getElementById('defaultIcon');
-        if (icon) icon.classList.add('d-none'); // Esconde ícone
-        preview.src = e.target.result;
-        preview.classList.remove('d-none'); // Mostra preview
-      }
-      reader.readAsDataURL(file);
+  const editPersonTypeSelect = document.getElementById('person_type');
+  const editCpfInput = document.getElementById('cpf');
+  const editCpfDiv = document.getElementById('cpf_div');
+  const editCnpjInput = document.getElementById('cnpj');
+  const editCnpjDiv = document.getElementById('cnpj_div');
+  const editPhoneInput = document.getElementById('phone');
+
+  //máscaras de CPF e CNPJ
+  VMasker(editCpfInput).maskPattern('999.999.999-99');
+  VMasker(editCnpjInput).maskPattern('99.999.999/9999-99');
+
+  //máscara de telefone
+  function phoneMaskEdit() {
+    const originalValue = editPhoneInput.value.replace(/\D/g, '');
+    const masks = ['(99) 9999-99999', '(99) 99999-9999'];
+    let maskToApply = '(99) 9999-99999';
+
+    if (originalValue.length === 11) {
+      maskToApply = masks[1];
+    } else if (originalValue.length === 10) {
+      maskToApply = masks[0];
+    } else if (originalValue.length > 11) {
+      maskToApply = masks[1];
+    }
+
+    VMasker(editPhoneInput).maskPattern(maskToApply);
+  }
+
+  editPhoneInput.addEventListener('input', phoneMaskEdit);
+  window.addEventListener('load', phoneMaskEdit);
+
+  //alternar exibição de CPF/CNPJ
+  function toggleCpfCnpjEdit() {
+    if (editPersonTypeSelect.value === 'física') {
+      editCpfDiv.style.display = '';
+      editCnpjDiv.style.display = 'none';
+      editCnpjInput.value = '';
+    } else if (editPersonTypeSelect.value === 'jurídica') {
+      editCnpjDiv.style.display = '';
+      editCpfDiv.style.display = 'none';
+      editCpfInput.value = '';
+    } else {
+      editCpfDiv.style.display = 'none';
+      editCnpjDiv.style.display = 'none';
+      editCpfInput.value = '';
+      editCnpjInput.value = '';
+    }
+  }
+
+  editPersonTypeSelect.addEventListener('change', toggleCpfCnpjEdit);
+  window.addEventListener('load', toggleCpfCnpjEdit);
+  const editForm = document.querySelector('form');
+  editForm.addEventListener('submit', () => {
+    let cleanPhone = editPhoneInput.value.replace(/\D/g, ''); 
+    if (!cleanPhone.startsWith('55')) {
+      cleanPhone = '55' + cleanPhone;
+    }
+    editPhoneInput.value = cleanPhone;
+
+    if (editCpfInput.value) {
+      editCpfInput.value = editCpfInput.value.replace(/\D/g, '');
+    }
+    if (editCnpjInput.value) {
+      editCnpjInput.value = editCnpjInput.value.replace(/\D/g, '');
     }
   });
 
-  //puxa os dados de cidade-estado do usuário e deixa o forms do ibge (script exclusivo para o edit de usuários)
-  async function loadStatesAndCities() {
+// IBGE - carregar estados e cidades e selecionar os já salvos
+async function loadStates() {
     const stateSelect = document.getElementById('state');
     const citySelect = document.getElementById('city');
 
+    // valores atuais do usuário vindos do backend
+    const savedState = "{{ $user->state }}";
+    const savedCity = "{{ $user->city }}";
+
+    // buscar todos os estados
     const response = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados');
     const states = await response.json();
+
+    // ordenar por nome
     states.sort((a, b) => a.nome.localeCompare(b.nome));
 
+    // preencher o select de estados
+    stateSelect.innerHTML = '<option value="">Selecione o estado</option>';
     states.forEach(state => {
-      const option = document.createElement('option');
-      option.value = state.sigla;
-      option.textContent = state.nome;
-      if (option.value === "{{ $user->state }}") {
-        option.selected = true;
-      }
-      stateSelect.appendChild(option);
-    });
-
-    if ("{{ $user->state }}") {
-      const cityResponse = await fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/{{ $user->state }}/municipios`);
-      const cities = await cityResponse.json();
-      cities.forEach(city => {
         const option = document.createElement('option');
-        option.value = city.nome;
-        option.textContent = city.nome;
-        if (option.value === "{{ $user->city }}") {
-          option.selected = true;
+        option.value = state.sigla;
+        option.textContent = state.nome;
+
+        // marcar o estado salvo como selecionado
+        if (state.sigla === savedState) {
+            option.selected = true;
         }
-        citySelect.appendChild(option);
-      });
-    }
 
-    stateSelect.addEventListener('change', async () => {
-      citySelect.innerHTML = '<option value="">Selecione a cidade</option>';
-      if (!stateSelect.value) return;
-
-      const cityResponse = await fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${stateSelect.value}/municipios`);
-      const cities = await cityResponse.json();
-
-      cities.forEach(city => {
-        const option = document.createElement('option');
-        option.value = city.nome;
-        option.textContent = city.nome;
-        citySelect.appendChild(option);
-      });
+        stateSelect.appendChild(option);
     });
+
+    // se já existir um estado salvo, carregar as cidades dele
+    if (savedState) {
+        const cityResponse = await fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${savedState}/municipios`);
+        const cities = await cityResponse.json();
+
+        citySelect.innerHTML = '<option value="">Selecione a cidade</option>';
+        cities.forEach(city => {
+            const option = document.createElement('option');
+            option.value = city.nome;
+            option.textContent = city.nome;
+
+            // marcar a cidade salva como selecionada
+            if (city.nome === savedCity) {
+                option.selected = true;
+            }
+
+            citySelect.appendChild(option);
+        });
+    }
+    stateSelect.addEventListener('change', async () => {
+        citySelect.innerHTML = '<option value="">Selecione a cidade</option>';
+        const selectedState = stateSelect.value;
+
+        if (!selectedState) return;
+
+        const cityResponse = await fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedState}/municipios`);
+        const cities = await cityResponse.json();
+
+        cities.forEach(city => {
+            const option = document.createElement('option');
+            option.value = city.nome;
+            option.textContent = city.nome;
+            citySelect.appendChild(option);
+        });
+    });
+}
+
+loadStates();
+
+//preview de imagem
+document.getElementById('photoInput').addEventListener('change', function(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+    const preview = document.getElementById('photoPreview');
+    const icon = document.getElementById('defaultIcon');
+      if (icon) icon.classList.add('d-none'); 
+      preview.src = e.target.result;
+      preview.classList.remove('d-none'); 
+      }
+    reader.readAsDataURL(file);
   }
+ });
 
-  loadStatesAndCities();
-
-  //abre o modal para excluir conta
-  function openDeleteAccountModal() {
+ //abre o modal para excluir conta
+function openDeleteAccountModal() {
   const modalEl = document.getElementById('deleteAccountModal');
   const modal = new bootstrap.Modal(modalEl);
   modal.show();
 }
 
 </script>
+
 
 @endsection

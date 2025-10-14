@@ -77,50 +77,67 @@
         <br>
         <div class="row mt-0">
           @forelse ($user->reviewsReceived as $review)
-            <div class="col-md-6 mb-4">
-              <div class="card h-100 sombra">
-                <div class="card-body d-flex flex-column">
-                  <h5 class="card-title fw-bold">{{ $review->reviewer->name }}</h5>
-                  @if ($review->comment)
-                    <p class="card-text">{{ $review->comment }}</p>
-                  @else
-                    <p class="text-muted">Sem comentário</p>
-                  @endif
-
-                  <div class="mt-auto d-flex justify-content-between align-items-center">
-                    <div>
-                      @for ($i = 1; $i <= 5; $i++)
-                        @if ($i <= $review->rating)
-                          <i class="bi bi-star-fill" style="color: #663399;"></i>
-                        @else
-                          <i class="bi bi-star" style="color: #663399;"></i>
-                        @endif
-                      @endfor
-                    </div>
-
-                    {{-- botão de excluir aparece apenas se o dono do perfil estiver logado --}}
-                    @if (auth()->id() === $user->id)
-                      <button class="btn trash" onclick="confirmDelete({{ $review->id }})">
-                        <i class="bi bi-trash-fill"></i>
-                      </button>
-                      <form id="deleteForm-{{ $review->id }}" 
-                            action="{{ route('reviews.destroy', $review->id) }}" 
-                            method="POST" style="display: none;">
-                        @csrf
-                        @method('DELETE')
-                      </form>
+          <div class="col-md-6 mb-4">
+            <div class="card h-100 sombra">
+              <div class="card-body d-flex flex-column">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <div class="d-flex align-items-center">
+                    @if ($review->reviewer && $review->reviewer->photo)
+                      <img src="{{ asset('storage/' . $review->reviewer->photo) }}" 
+                          alt="Foto de {{ $review->reviewer->name }}" 
+                          class="rounded-circle me-2" 
+                          style="width: 40px; height: 40px; object-fit: cover;">
+                    @else
+                      <i class="bi bi-person-circle fs-3 me-2"></i>
                     @endif
+                    <div>
+                      <h6 class="fw-bold mb-0">{{ $review->reviewer->name }}</h6>
+                      <small class="text-muted">{{ $review->created_at->format('d/m/Y H:i') }}</small>
+                    </div>
                   </div>
                 </div>
 
+                <!-- comentário -->
+                @if ($review->comment)
+                  <p class="card-text mt-2">{{ $review->comment }}</p>
+                @else
+                  <p class="text-muted mt-2">Sem comentário</p>
+                @endif
+
+                <!-- estrelas e botão de excluir -->
+                <div class="mt-auto d-flex justify-content-between align-items-center">
+                  <div>
+                    @for ($i = 1; $i <= 5; $i++)
+                      @if ($i <= $review->rating)
+                        <i class="bi bi-star-fill" style="color: #663399;"></i>
+                      @else
+                        <i class="bi bi-star" style="color: #663399;"></i>
+                      @endif
+                    @endfor
+                  </div>
+
+                  @if (auth()->id() === $user->id)
+                    <button class="btn trash" onclick="confirmDelete({{ $review->id }})">
+                      <i class="bi bi-trash-fill"></i>
+                    </button>
+                    <form id="deleteForm-{{ $review->id }}" 
+                          action="{{ route('reviews.destroy', $review->id) }}" 
+                          method="POST" style="display: none;">
+                      @csrf
+                      @method('DELETE')
+                    </form>
+                  @endif
+                </div>
               </div>
             </div>
+          </div>
           @empty
-            <p class="phrases">
               @if (auth()->id() === $user->id)
-                Você ainda não possui nenhuma avaliação.
+                <p class="d-flex justify-content-center text-muted"><i class="bi bi-star" style="font-size: 80px;"></i></p>
+                <p class="d-flex justify-content-center text-muted">Você ainda não possui nenhuma avaliação.</p>
               @else
-                {{ $user->name }} ainda não possui nenhuma avaliação.
+                <p class="d-flex justify-content-center text-muted"><i class="bi bi-star" style="font-size: 80px;"></i></p>
+                <p class="d-flex justify-content-center text-muted">{{ $user->name }} ainda não possui nenhuma avaliação.</p>
               @endif
             </p>
           @endforelse

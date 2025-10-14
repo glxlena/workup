@@ -7,6 +7,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserReviewController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\MessagesController; // ✅ adicionado
 
 Auth::routes();
 
@@ -28,4 +29,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/user/{user}/undo-remove-photo', [UserController::class, 'undoRemovePhoto'])->name('user.undoRemovePhoto');
     Route::get('/favoritos', [FavoriteController::class, 'index'])->name('favorites.index');
     Route::post('/posts/{post}/favorite', [FavoriteController::class, 'toggleFavorite'])->name('posts.favorite');
+    Route::get('/messages/{user}', [HomeController::class, 'contact'])->name('messages.contact');
+    Route::post('/messages/{user}/send', [MessagesController::class, 'sendEmail'])->name('messages.send');
 });

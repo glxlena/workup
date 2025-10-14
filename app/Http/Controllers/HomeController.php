@@ -10,6 +10,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $query = Post::with('user')->where('status', true)->latest();
+        $query = Post::with(['user', 'images'])->where('status', true)->latest(); 
 
         // filtro por tipo de post
         if ($request->filled('user_type')) {
@@ -39,7 +40,7 @@ class HomeController extends Controller
         
         $posts = $query->paginate(9)->appends($request->query());
     
-        // INJETAR O STATUS DE FAVORITO
+        //favorito
         if (Auth::check()) {
             $favoritedPostIds = Auth::user()->favorites()->pluck('post_id')->toArray();
             
@@ -56,4 +57,11 @@ class HomeController extends Controller
     {
         return view('home.create');
     }
+
+    public function contact($id)
+    {
+        $user = \App\Models\User::findOrFail($id);
+        return view('messages.messages', compact('user'));
+    }
+
 }

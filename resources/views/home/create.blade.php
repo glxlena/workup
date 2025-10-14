@@ -49,17 +49,20 @@
       </div>
 
       <div class="mb-3">
-        <label for="imageInput" class="form-label">Fotos (opcional)</label><br>
-        <label for="imageInput" class="btn btn-outline-secondary d-flex align-items-center" style="gap: 8px; cursor: pointer;">
-          <i class="bi bi-plus-square" style="font-size: 1.5rem;"></i> Selecionar Imagem
+        <label for="imagesInput" class="form-label">Fotos (opcional, até 5)</label><br>
+        <label for="imagesInput" class="btn btn-outline-secondary d-flex align-items-center" style="gap: 8px; cursor: pointer;">
+          <i class="bi bi-plus-square" style="font-size: 1.5rem;"></i> Selecionar Imagens
         </label>
-        <input class="form-control d-none" type="file" id="imageInput" name="image" accept="image/*" onchange="previewImage(event, 'imagePreview')">
-        @error('image')
+        <input class="form-control d-none" type="file" id="imagesInput" name="images[]" accept="image/*" multiple onchange="previewMultipleImages(event, 'imagesPreviewContainer')">
+        @error('images')
           <div class="text-danger">{{ $message }}</div>
+        @enderror
+        @error('images.*') 
+          <div class="text-danger">Uma das imagens falhou: {{ $message }}</div>
         @enderror
       </div>
 
-      <div id="imagePreview" style="position: relative; max-width: 200px;"></div>
+      <div id="imagesPreviewContainer" class="d-flex flex-wrap gap-2 mb-3"></div>
 
       <div class="d-flex justify-content-between mt-4">
         <a href="{{ route('home') }}" class="btn btn-outline-secondary">Voltar</a>

@@ -29,37 +29,40 @@ class FavoriteController extends Controller
 
     public function index(Request $request)
     {
-        $posts = Auth::user()->favorites()->where('status', true)->latest();
-
+        $query = Auth::user()->favorites()->where('status', true)->latest();
+    
         // filtro por tipo de post
         if ($request->filled('user_type')) {
-            $posts->where('post_type', $request->input('user_type'));
+            $query->where('post_type', $request->input('user_type'));
         }
-
+    
         // filtro por categoria
         if ($request->filled('niche')) {
-            $posts->where('niche', $request->input('niche'));
+            $query->where('niche', $request->input('niche'));
         }
-
+    
         //filtro por Estado (precisa da relação com o usuário do post)
         if ($request->filled('state')) {
             $state = $request->input('state');
-            $posts->whereHas('user', function ($query) use ($state) {
-                $query->where('state', $state);
+            $query->whereHas('user', function ($q) use ($state) {
+                $q->where('state', $state);
             });
         }
-
+    
         //filtro por Cidade
         if ($request->filled('city')) {
             $city = $request->input('city');
-            $posts->whereHas('user', function ($query) use ($city) {
-                $query->where('city', $city);
+            $query->whereHas('user', function ($q) use ($city) {
+                $q->where('city', $city);
             });
         }
         
-        // paginação
-        $posts = $posts->with('user')->paginate(9)->appends($request->query());
-
+        $posts = $query->with(['user', 'images'])->paginate(9)->appends($request->query());
+    
+        foreach ($posts as $post) {
+            $post->is_favorited = true;
+        }
+    
         return view('home.favorites', compact('posts'));
     }
 }

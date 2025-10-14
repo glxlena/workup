@@ -14,10 +14,14 @@ class Post extends Model
         'post_type',
         'title',
         'description',
-        'image_path',
         'niche',
         'status',
     ];
+
+    public function images()
+    {
+        return $this->hasMany(PostImage::class);
+    }
 
     public function user()
     {

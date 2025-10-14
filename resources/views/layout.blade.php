@@ -40,12 +40,12 @@
             </a>
 
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" >
-              <a class="dropdown-item" href="{{ route('user.show', Auth::user()->id) }}"><i class="bi bi-person-gear" style="color: #663399;"></i> Perfil</a>
-              <a class="dropdown-item" href="{{ route('posts.userPosts') }}"><i class="bi bi-list-stars" style="color: #663399;"></i> Posts</a>
-              <a class="dropdown-item" href="{{ route('favorites.index') }}"><i class="bi bi-heart" style="color: #663399;"></i> Favoritos</a>
+              <a class="dropdown-item" href="{{ route('user.show', Auth::user()->id) }}"><i class="bi bi-person-gear" style="color: #663399;"></i> Meu Perfil</a>
+              <a class="dropdown-item" href="{{ route('posts.userPosts') }}"><i class="bi bi-list-stars" style="color: #663399;"></i> Meus Posts</a>
+              <a class="dropdown-item" href="{{ route('favorites.index') }}"><i class="bi bi-heart" style="color: #663399;"></i> Meus Favoritos</a>
               <a class="dropdown-item" href="{{ route('logout') }}"
                 onclick="event.preventDefault(); openLogoutModal();"> <i class="bi bi-box-arrow-right" style="color:red;"></i>
-                {{ __('Sair') }}
+                {{ __(' Sair') }}
               </a>
 
               <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -67,7 +67,7 @@
         <p class="mb-4 fs-5">Tem certeza que deseja sair?</p>
         <div class="d-flex justify-content-center gap-3">
           <button type="button" class="btn btn-danger" id="confirmLogoutBtn">Sim, quero sair</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não, quero ficar</button>
+          <button type="button" class="btn btn-success" data-bs-dismiss="modal">Não, quero ficar</button>
         </div>
       </div>
     </div>

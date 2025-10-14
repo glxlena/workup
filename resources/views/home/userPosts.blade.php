@@ -68,14 +68,17 @@
       <!--posts disponíveis-->
       <h3 class="mb-3">Disponíveis</h3>
       @if($availablePosts->isEmpty())
-        <p class="d-flex justify-content-center">Nenhum post disponível.</p>
+        <p class="d-flex justify-content-center text-muted"><i class="bi bi-view-list" style="font-size: 80px;"></i></p>
+        <p class="d-flex justify-content-center text-muted">Nenhum post como disponível.</p>
       @else
         @foreach($availablePosts as $post)
           <div class="card mb-3 sombrinha">
             <div class="card-body">
-              <h5 class="card-title">{{ $post->title }}</h5>
-              <p class="card-text">{{ $post->description }}</p>
-              <p class="text-muted"><small>Postado em {{ $post->created_at->format('d/m/Y H:i') }}</small></p>
+              <h5 class="card-title">{{ $post->title }} - <small class="text-muted">{{ $post->created_at->format('d/m/Y H:i') }}</small></h5>
+              <p class="card-text text-secondary mb-3">
+                  {!! nl2br(e(\Illuminate\Support\Str::limit($post->description, 20, '...'))) !!}
+              </p>
+              <p class="text-muted mb-1"><strong>{{ $post->niche ?? 'Não informado' }} - {{ ucfirst($post->post_type) }}</strong></p>
               <div class="d-flex justify-content-end gap-2">
               <form action="{{ route('posts.toggleStatus', $post->id) }}" method="POST" class="d-inline">
                 @csrf
@@ -95,7 +98,15 @@
 
 
                 <a href="{{ route('posts.edit', $post->id) }}" class="edit">Editar</a>
-                <button class="btn trash" onclick="confirmDelete({{ $post->id }})">
+                <form id="deleteForm-{{ $post->id }}" 
+                    action="{{ route('posts.destroy', $post->id) }}" 
+                    method="POST" 
+                    style="display: none;">
+                  @csrf
+                  @method('DELETE')
+                </form>
+
+                <button type="button" class="btn trash" onclick="confirmDelete({{ $post->id }})">
                   <i class="bi bi-trash-fill"></i>
                 </button>
               </div>
@@ -107,14 +118,17 @@
       <!--posts indisponíveis-->
       <h3 class="mt-5 mb-3">Indisponíveis</h3>
       @if($unavailablePosts->isEmpty())
-        <p class="d-flex justify-content-center">Nenhum post indisponível.</p>
+        <p class="d-flex justify-content-center text-muted"><i class="bi bi-view-list" style="font-size: 80px;"></i></p>
+        <p class="d-flex justify-content-center text-muted">Nenhum post como indisponível.</p>
       @else
         @foreach($unavailablePosts as $post)
           <div class="card mb-3 sombrinha">
             <div class="card-body">
-              <h5 class="card-title">{{ $post->title }}</h5>
-              <p class="card-text">{{ $post->description }}</p>
-              <p class="text-muted"><small>Postado em {{ $post->created_at->format('d/m/Y H:i') }}</small></p>
+              <h5 class="card-title">{{ $post->title }} - <small class="text-muted">{{ $post->created_at->format('d/m/Y H:i') }}</small></h5>
+              <p class="card-text text-secondary mb-3">
+                  {!! nl2br(e(\Illuminate\Support\Str::limit($post->description, 20, '...'))) !!}
+              </p>
+              <p class="text-muted mb-1"><strong>{{ $post->niche ?? 'Não informado' }} - {{ ucfirst($post->post_type) }}</strong></p>
               <div class="d-flex justify-content-end gap-2">
               <form action="{{ route('posts.toggleStatus', $post->id) }}" method="POST" class="d-inline">
                   @csrf
@@ -134,7 +148,15 @@
 
 
                 <a href="{{ route('posts.edit', $post->id) }}" class="edit">Editar</a>
-                <button class="btn trash" onclick="confirmDelete({{ $post->id }})">
+                <form id="deleteForm-{{ $post->id }}" 
+                    action="{{ route('posts.destroy', $post->id) }}" 
+                    method="POST" 
+                    style="display: none;">
+                  @csrf
+                  @method('DELETE')
+                </form>
+
+                <button type="button" class="btn trash" onclick="confirmDelete({{ $post->id }})">
                   <i class="bi bi-trash-fill"></i>
                 </button>
               </div>
