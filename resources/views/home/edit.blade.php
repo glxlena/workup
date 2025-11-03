@@ -3,7 +3,7 @@
 @section('base')
 <br>
 <div class="d-flex justify-content-center align-items-start w-100">
-  <div class="p-4 m-4 bg-light rounded shadow" style="max-width: 600px; width: 100%;">
+  <div class="p-4 m-4 bg-light rounded sombra" style="max-width: 600px; width: 100%;">
     <h2 class="text-center mb-4">Editar Postagem</h2>
     <form id="editForm" action="{{ route('posts.update', $post->id) }}" method="POST" enctype="multipart/form-data">
       @csrf
@@ -84,9 +84,7 @@
               multiple 
               onchange="previewMultipleImages(event, 'newImagesPreview')">
         
-        @error('new_images')
-          <div class="text-danger">{{ $message }}</div>
-        @enderror
+              <div id="imageLimitAlertContainer"></div>
         @error('new_images.*')
             <div class="text-danger">Erro em uma das novas imagens: {{ $message }}</div>
         @enderror

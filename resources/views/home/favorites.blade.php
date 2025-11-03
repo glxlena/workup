@@ -3,11 +3,26 @@
 @section('base')
 <br>
 <div class="d-flex w-100 position-absolute justify-content-center align-items-start">
-    <div class="p-4 w-100 m-4 bg-light rounded">
+    <div class="p-4 w-100 m-4 bg-light rounded sombra">
         @if(session('success'))
             <div id="successAlert" class="alert alert-success alert-dismissible fade show d-flex align-items-center gap-2" role="alert">
                 <i class="bi bi-check-circle-fill fs-5"></i>
                 <div>{{ session('success') }}</div>
+            </div>
+        @endif
+
+        @if(request('unfavorited'))
+            <div id="deleteAlert" class="alert alert-danger alert-dismissible fade show d-flex align-items-center justify-content-between gap-3" role="alert">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-x-circle-fill fs-5"></i>
+                    <div>Favorito removido com sucesso!</div>
+                </div>
+                <form method="POST" action="{{ route('favorites.undo') }}">
+                    @csrf
+                    <input type="hidden" name="post_id" value="{{ request('unfavorited') }}" />
+                    <button type="submit" class="btn btn-danger">Desfazer</button>
+                </form>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
 
@@ -100,7 +115,8 @@
                                        data-auth-id="{{ auth()->id() }}"
                                        data-is-favorited="{{ $post->is_favorited ? 1 : 0 }}"
                                        data-created-at="{{ $post->created_at }}"
-                                       data-images='@json($post->images->map(fn($img) => asset("storage/" . $img->path)))'>
+                                       data-images='@json($post->images->map(fn($img) => asset("storage/" . $img->path)))'
+                                       data-contact-url="{{ route('messages.contact', $post->user->id) }}">
                                         Ver mais
                                     </a>
                                 </div>
@@ -114,7 +130,7 @@
             </div>
 
             <div class="d-flex justify-content-center mt-4">
-                {{ $posts->appends(request()->query())->links() }}
+                {{ $posts->appends(request()->query())->links('pagination::simple-bootstrap-4') }}
             </div>
         </div>
     </div>
@@ -207,5 +223,5 @@
         }
     });
 });
-</script>s
+</script>
 @endsection

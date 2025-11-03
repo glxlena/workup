@@ -2,30 +2,30 @@
 @section('title', 'WorkUP - Meus Posts')
 @section('base')
 <br>
-<div class="d-flex w-100 justify-content-center align-items-start">
-  <div class="p-4 w-100 m-4 bg-light rounded">
+<div class="d-flex w-100 position-absolute justify-content-center align-items-start">
+  <div class="p-4 w-100 m-4 bg-light rounded sombra">
     <!--mensagem de sucesso na edição de post-->
-  @if(session('success'))
-    <div id="successAlert" class="alert alert-success alert-dismissible fade show d-flex align-items-center gap-2" role="alert">
-      <i class="bi bi-check-circle-fill fs-5"></i>
-      <div>{{ session('success') }}</div>
-    </div>
-  @endif
-
- <!--mensagem de sucesso na exclusão de post, com opção de desfazer-->
-  @if(session('post_deleted'))
-    <div id="deleteAlert" class="alert alert-danger alert-dismissible fade show d-flex align-items-center justify-content-between gap-3" role="alert">
-      <div class="d-flex align-items-center gap-2">
-        <i class="bi bi-x-circle-fill fs-5"></i>
-        <div>{{ session('post_deleted') }}</div>
+    @if(session('success'))
+      <div id="successAlert" class="alert alert-success alert-dismissible fade show d-flex align-items-center gap-2" role="alert">
+        <i class="bi bi-check-circle-fill fs-5"></i>
+        <div>{{ session('success') }}</div>
       </div>
-      <form method="POST" action="{{ route('posts.undoDelete') }}">
-        @csrf
-        <button type="submit" class="btn btn-danger">Desfazer</button>
-      </form>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  @endif
+    @endif
+
+   <!--mensagem de sucesso na exclusão de post, com opção de desfazer-->
+    @if(session('post_deleted'))
+      <div id="deleteAlert" class="alert alert-danger alert-dismissible fade show d-flex align-items-center justify-content-between gap-3" role="alert">
+        <div class="d-flex align-items-center gap-2">
+          <i class="bi bi-x-circle-fill fs-5"></i>
+          <div>{{ session('post_deleted') }}</div>
+        </div>
+        <form method="POST" action="{{ route('posts.undoDelete') }}">
+          @csrf
+          <button type="submit" class="btn btn-danger">Desfazer</button>
+        </form>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    @endif
 
 
     <h2 class="text-center">Meus Posts</h2>
@@ -64,73 +64,55 @@
       </div>
     </form>
 
-    <div class="container mt-4">
-      <!--posts disponíveis-->
-      <h3 class="mb-3">Disponíveis</h3>
-      @if($availablePosts->isEmpty())
-        <p class="d-flex justify-content-center text-muted"><i class="bi bi-view-list" style="font-size: 80px;"></i></p>
-        <p class="d-flex justify-content-center text-muted">Nenhum post como disponível.</p>
-      @else
+    <!--abas para posts disponíveis e indisponíveis-->
+    <ul class="nav nav-tabs" id="postTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="available-tab" data-bs-toggle="tab" data-bs-target="#available" type="button" role="tab" aria-controls="available" aria-selected="true" style="color: #663399;">
+          Disponíveis
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="unavailable-tab" data-bs-toggle="tab" data-bs-target="#unavailable" type="button" role="tab" aria-controls="unavailable" aria-selected="false" style="color: #663399;">
+          Indisponíveis
+        </button>
+      </li>
+    </ul>
+
+    <div class="tab-content mt-3" id="postTabsContent">
+      <!--disponíveis-->
+      <div class="tab-pane fade show active" id="available" role="tabpanel" aria-labelledby="available-tab">
+        @if($availablePosts->isEmpty())
+          <p class="d-flex justify-content-center text-muted"><i class="bi bi-view-list" style="font-size: 80px;"></i></p>
+          <p class="d-flex justify-content-center text-muted">Nenhum post como disponível.</p>
+        @else
         @foreach($availablePosts as $post)
-          <div class="card mb-3 sombrinha">
-            <div class="card-body">
-              <h5 class="card-title">{{ $post->title }} - <small class="text-muted">{{ $post->created_at->format('d/m/Y H:i') }}</small></h5>
-              <p class="card-text text-secondary mb-3">
-                  {!! nl2br(e(\Illuminate\Support\Str::limit($post->description, 20, '...'))) !!}
-              </p>
-              <p class="text-muted mb-1"><strong>{{ $post->niche ?? 'Não informado' }} - {{ ucfirst($post->post_type) }}</strong></p>
-              <div class="d-flex justify-content-end gap-2">
-              <form action="{{ route('posts.toggleStatus', $post->id) }}" method="POST" class="d-inline">
-                @csrf
-                @method('PATCH')
-                <div class="form-check form-switch">
-                  <input 
-                    class="form-check-input" 
-                    type="checkbox" 
-                    id="switch-{{ $post->id }}" 
-                    onchange="this.form.submit()" 
-                    {{ $post->status ? 'checked' : '' }}>
-                  <label class="form-check-label" for="switch-{{ $post->id }}">
-                    {{ $post->status ? 'Disponível' : 'Indisponível' }}
-                  </label>
-                </div>
-              </form>
+          @php
+              $highlight = request('highlight_post') == $post->id;
+          @endphp
+          <div class="card mb-3 sombrinha {{ $highlight ? 'highlighted' : '' }}">
+              <div class="card-body">
+                <h5 class="card-title">{{ $post->title }} - <small class="text-muted">{{ $post->created_at->format('d/m/Y H:i') }}</small></h5>
+                <p class="card-text text-secondary mb-3">
+                  {{ $post->description }}
+                </p>
+                <p class="text-muted mb-1"><strong>{{ $post->niche ?? 'Não informado' }} - {{ ucfirst($post->post_type) }}</strong></p>
 
+                <!--prévia das imagens-->
+                @if ($post->images && $post->images->count() > 0)
+                  <div class="d-flex flex-wrap gap-2 mb-3">
+                    @foreach ($post->images as $image)
+                      <img 
+                        src="{{ asset('storage/' . $image->path) }}" 
+                        alt="Imagem do post {{ $post->title }}"
+                        class="rounded border"
+                        style="width: 100px; height: 100px; object-fit: cover;"
+                      >
+                    @endforeach
+                  </div>
+                @endif
 
-                <a href="{{ route('posts.edit', $post->id) }}" class="edit">Editar</a>
-                <form id="deleteForm-{{ $post->id }}" 
-                    action="{{ route('posts.destroy', $post->id) }}" 
-                    method="POST" 
-                    style="display: none;">
-                  @csrf
-                  @method('DELETE')
-                </form>
-
-                <button type="button" class="btn trash" onclick="confirmDelete({{ $post->id }})">
-                  <i class="bi bi-trash-fill"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        @endforeach
-      @endif
-
-      <!--posts indisponíveis-->
-      <h3 class="mt-5 mb-3">Indisponíveis</h3>
-      @if($unavailablePosts->isEmpty())
-        <p class="d-flex justify-content-center text-muted"><i class="bi bi-view-list" style="font-size: 80px;"></i></p>
-        <p class="d-flex justify-content-center text-muted">Nenhum post como indisponível.</p>
-      @else
-        @foreach($unavailablePosts as $post)
-          <div class="card mb-3 sombrinha">
-            <div class="card-body">
-              <h5 class="card-title">{{ $post->title }} - <small class="text-muted">{{ $post->created_at->format('d/m/Y H:i') }}</small></h5>
-              <p class="card-text text-secondary mb-3">
-                  {!! nl2br(e(\Illuminate\Support\Str::limit($post->description, 20, '...'))) !!}
-              </p>
-              <p class="text-muted mb-1"><strong>{{ $post->niche ?? 'Não informado' }} - {{ ucfirst($post->post_type) }}</strong></p>
-              <div class="d-flex justify-content-end gap-2">
-              <form action="{{ route('posts.toggleStatus', $post->id) }}" method="POST" class="d-inline">
+                <div class="d-flex justify-content-end gap-2">
+                <form action="{{ route('posts.toggleStatus', $post->id) }}" method="POST" class="d-inline">
                   @csrf
                   @method('PATCH')
                   <div class="form-check form-switch">
@@ -146,28 +128,93 @@
                   </div>
                 </form>
 
+                  <a href="{{ route('posts.edit', $post->id) }}" class="edit">Editar</a>
+                  <form id="deleteForm-{{ $post->id }}" 
+                      action="{{ route('posts.destroy', $post->id) }}" 
+                      method="POST" 
+                      style="display: none;">
+                    @csrf
+                    @method('DELETE')
+                  </form>
 
-                <a href="{{ route('posts.edit', $post->id) }}" class="edit">Editar</a>
-                <form id="deleteForm-{{ $post->id }}" 
-                    action="{{ route('posts.destroy', $post->id) }}" 
-                    method="POST" 
-                    style="display: none;">
-                  @csrf
-                  @method('DELETE')
-                </form>
-
-                <button type="button" class="btn trash" onclick="confirmDelete({{ $post->id }})">
-                  <i class="bi bi-trash-fill"></i>
-                </button>
+                  <button type="button" class="btn trash" onclick="confirmDelete({{ $post->id }})">
+                    <i class="bi bi-trash-fill"></i>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        @endforeach
-      @endif
-
-      <div class="d-flex justify-content-center mt-4">
-        {{ $posts->appends(request()->query())->links() }}
+          @endforeach
+        @endif
       </div>
+
+      <!--indisponíveis-->
+      <div class="tab-pane fade" id="unavailable" role="tabpanel" aria-labelledby="unavailable-tab">
+        @if($unavailablePosts->isEmpty())
+          <p class="d-flex justify-content-center text-muted"><i class="bi bi-view-list" style="font-size: 80px;"></i></p>
+          <p class="d-flex justify-content-center text-muted">Nenhum post como indisponível.</p>
+        @else
+          @foreach($unavailablePosts as $post)
+            <div class="card mb-3 sombrinha">
+              <div class="card-body">
+                <h5 class="card-title">{{ $post->title }} - <small class="text-muted">{{ $post->created_at->format('d/m/Y H:i') }}</small></h5>
+                <p class="card-text text-secondary mb-3">
+                    {{ $post->description }}
+                </p>
+                <p class="text-muted mb-1"><strong>{{ $post->niche ?? 'Não informado' }} - {{ ucfirst($post->post_type) }}</strong></p>
+
+                <!--prévia das imagens-->
+                @if ($post->images && $post->images->count() > 0)
+                  <div class="d-flex flex-wrap gap-2 mb-3">
+                    @foreach ($post->images as $image)
+                      <img 
+                        src="{{ asset('storage/' . $image->path) }}" 
+                        alt="Imagem do post {{ $post->title }}"
+                        class="rounded border"
+                        style="width: 100px; height: 100px; object-fit: cover;"
+                      >
+                    @endforeach
+                  </div>
+                @endif
+
+                <div class="d-flex justify-content-end gap-2">
+                <form action="{{ route('posts.toggleStatus', $post->id) }}" method="POST" class="d-inline">
+                    @csrf
+                    @method('PATCH')
+                    <div class="form-check form-switch">
+                      <input 
+                        class="form-check-input" 
+                        type="checkbox" 
+                        id="switch-{{ $post->id }}" 
+                        onchange="this.form.submit()" 
+                        {{ $post->status ? 'checked' : '' }}>
+                      <label class="form-check-label" for="switch-{{ $post->id }}">
+                        {{ $post->status ? 'Disponível' : 'Indisponível' }}
+                      </label>
+                    </div>
+                  </form>
+
+                  <a href="{{ route('posts.edit', $post->id) }}" class="edit">Editar</a>
+                  <form id="deleteForm-{{ $post->id }}" 
+                      action="{{ route('posts.destroy', $post->id) }}" 
+                      method="POST" 
+                      style="display: none;">
+                    @csrf
+                    @method('DELETE')
+                  </form>
+
+                  <button type="button" class="btn trash" onclick="confirmDelete({{ $post->id }})">
+                    <i class="bi bi-trash-fill"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          @endforeach
+        @endif
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center mt-4">
+      {{ $posts->appends(request()->query())->links('pagination::simple-bootstrap-4') }}
     </div>
 
 
@@ -192,4 +239,16 @@
    style="bottom: 30px; right: 30px; z-index: 999;">
    Novo Post
 </a>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const highlighted = document.querySelector('#available .highlighted');
+  if (highlighted) {
+    highlighted.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    highlighted.classList.add('highlight-animation');
+    setTimeout(() => {
+      highlighted.classList.remove('highlight-animation');
+    }, 5000);
+  }
+});
+</script>
 @endsection

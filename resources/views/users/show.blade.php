@@ -26,8 +26,7 @@
   @endif
 
   <div class="row">
-    <div class="col-md-3 border rounded p-4 bg-light d-flex flex-column align-items-center">
-      <!-- se o usuário tiver uma foto, vai aparecer, se não, aparece o icone padrão -->
+    <div class="col-md-3 border rounded p-4 bg-light d-flex flex-column align-items-center sombra">
       @if ($user->photo)
       <img src="{{ asset('storage/' . $user->photo) }}" 
         class="rounded-circle mb-3 sombra" 
@@ -68,7 +67,7 @@
     </div>
 
     <div class="col-md-9">
-      <div class="p-4 bg-light rounded" style="height: 650px; overflow-y: auto;">
+      <div class="p-4 bg-light rounded sombra" style="height: 650px; overflow-y: auto;">
         @if (auth()->id() === $user->id)
           <h2 class="text-center">Minhas Avaliações</h2>
         @else
@@ -78,7 +77,7 @@
         <div class="row mt-0">
           @forelse ($user->reviewsReceived as $review)
           <div class="col-md-6 mb-4">
-            <div class="card h-100 sombra">
+          <div class="card h-100 sombra review-card {{ isset($highlightReview) && $highlightReview == $review->id ? 'highlighted' : '' }}" id="review-{{ $review->id }}">
               <div class="card-body d-flex flex-column">
                 <div class="d-flex align-items-center justify-content-between mb-2">
                   <div class="d-flex align-items-center">
@@ -207,6 +206,19 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('deleteForm-' + deleteId).submit();
       }
     });
+  }
+});
+
+//avaliação destacada
+document.addEventListener('DOMContentLoaded', () => {
+  const highlighted = document.querySelector('.highlighted');
+  if (highlighted) {
+    highlighted.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    highlighted.classList.add('highlight-animation');
+
+    setTimeout(() => {
+      highlighted.classList.remove('highlight-animation');
+    }, 5000); // 5 segundos
   }
 });
 </script>

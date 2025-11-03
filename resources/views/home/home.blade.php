@@ -3,7 +3,7 @@
 @section('base')
 <br>
 <div class="d-flex w-100 position-absolute justify-content-center align-items-start">
-    <div class="p-4 w-100 m-4 bg-light rounded">
+    <div class="p-4 w-100 m-4 bg-light rounded sombra">
         @if(session('success'))
             <div id="successAlert" class="alert alert-success alert-dismissible fade show d-flex align-items-center gap-2" role="alert">
                 <i class="bi bi-check-circle-fill fs-5"></i>
@@ -30,7 +30,7 @@
                     <div class="d-flex align-items-center h-100 p-4">
                         <h1 class="col-9" style="font-weight: 500; color: #663399">Divulgue serviços e conquiste novos clientes sem complicação!</h1>
                         <div class="col-3 text-end">
-                            <img src="{{ asset('images/logo_pequena.png') }}" alt="Logo Colorida" style="height: 60px; width: auto;">
+                            <img src="{{ asset('images/logo_pequena.png') }}" alt="Logo Colorida" style="height: 70px; width: auto;">
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                     <div class="d-flex align-items-center h-100 p-4">
                         <h1 class="col-9" style="font-weight: 500; color: #663399">Sua rede de freelancers começa aqui!</h1>
                         <div class="col-3 text-end">
-                            <img src="{{ asset('images/logo_pequena.png') }}" alt="Logo Colorida" style="height: 60px; width: auto;">
+                            <img src="{{ asset('images/logo_pequena.png') }}" alt="Logo Colorida" style="height: 70px; width: auto;">
                         </div>
                     </div>
                 </div>
@@ -175,7 +175,7 @@
             </div>
 
             <div class="d-flex justify-content-center mt-4">
-                {{ $posts->appends(request()->query())->links() }}
+                {{ $posts->appends(request()->query())->links('pagination::simple-bootstrap-4') }}
             </div>
         </div>
     </div>

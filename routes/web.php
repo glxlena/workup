@@ -7,7 +7,8 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserReviewController;
 use App\Http\Controllers\FavoriteController;
-use App\Http\Controllers\MessagesController; // ✅ adicionado
+use App\Http\Controllers\MessagesController;
+use App\Http\Controllers\NotificationController;
 
 Auth::routes();
 
@@ -29,6 +30,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/user/{user}/undo-remove-photo', [UserController::class, 'undoRemovePhoto'])->name('user.undoRemovePhoto');
     Route::get('/favoritos', [FavoriteController::class, 'index'])->name('favorites.index');
     Route::post('/posts/{post}/favorite', [FavoriteController::class, 'toggleFavorite'])->name('posts.favorite');
+    Route::post('/favorites/undo', [FavoriteController::class, 'undo'])->name('favorites.undo');
     Route::get('/messages/{user}', [HomeController::class, 'contact'])->name('messages.contact');
     Route::post('/messages/{user}/send', [MessagesController::class, 'sendEmail'])->name('messages.send');
+    Route::get('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read')->middleware('auth');
+    Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.readAll')->middleware('auth');
+    Route::delete('/notifications/{id}', [NotificationController::class, 'destroy'])->name('notifications.destroy')->middleware('auth');
 });

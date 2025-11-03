@@ -37,8 +37,8 @@
     @method('PUT')
     <div class="row">
       <!--coluna esquerda-->
-      <div class="col-md-3 border rounded p-4 bg-light d-flex flex-column align-items-center position-relative">
-        {{-- Foto ou ícone --}}
+      <div class="col-md-3 border rounded p-4 bg-light d-flex flex-column align-items-center position-relative sombra">
+        <!--foto ou icone-->
         <div class="position-relative d-inline-block">
           @if ($user->photo)
             <img id="photoPreview" src="{{ asset('storage/' . $user->photo) }}"
@@ -86,7 +86,7 @@
 
       <!--coluna direita-->
       <div class="col-md-9">
-        <div class="p-4 bg-light rounded" style="height: 650px; overflow-y: auto;">
+        <div class="p-4 bg-light rounded sombra" style="height: 650px; overflow-y: auto;">
           <h2 class="text-center">Editar Dados</h2>
 
           <div class="row mt-3 g-3">

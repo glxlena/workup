@@ -3,7 +3,7 @@
 @section('base')
 <br>
 <div class="d-flex justify-content-center align-items-start w-100">
-  <div class="p-4 m-4 bg-light rounded shadow" style="max-width: 600px; width: 100%;">
+  <div class="p-4 m-4 bg-light rounded sombra" style="max-width: 600px; width: 100%;">
     <h2 class="text-center mb-4">Novo Post</h2>
     <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data" id="createPostForm">
       @csrf
@@ -54,14 +54,8 @@
           <i class="bi bi-plus-square" style="font-size: 1.5rem;"></i> Selecionar Imagens
         </label>
         <input class="form-control d-none" type="file" id="imagesInput" name="images[]" accept="image/*" multiple onchange="previewMultipleImages(event, 'imagesPreviewContainer')">
-        @error('images')
-          <div class="text-danger">{{ $message }}</div>
-        @enderror
-        @error('images.*') 
-          <div class="text-danger">Uma das imagens falhou: {{ $message }}</div>
-        @enderror
+        <div id="imageLimitAlertContainer" text-danger></div>
       </div>
-
       <div id="imagesPreviewContainer" class="d-flex flex-wrap gap-2 mb-3"></div>
 
       <div class="d-flex justify-content-between mt-4">

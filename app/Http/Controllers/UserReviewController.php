@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\UserReview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\NewReviewNotification;
 
 class UserReviewController extends Controller
 {
@@ -20,12 +21,18 @@ class UserReviewController extends Controller
         }
 
         // criar avaliação
-        UserReview::create([
+        $review = UserReview::create([
             'reviewer_id' => Auth::id(),
             'reviewed_id' => $reviewedId,
             'rating' => $request->rating,
             'comment' => $request->comment,
         ]);
+
+        // notificar o usuário avaliado
+        $reviewedUser = User::find($reviewedId);
+        if ($reviewedUser) {
+            $reviewedUser->notify(new NewReviewNotification($review));
+        }
 
 
         return back()->with('success', 'Avaliação registrada com sucesso!');
