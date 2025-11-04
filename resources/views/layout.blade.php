@@ -10,6 +10,7 @@
     <link rel="icon" href="{{ asset('images/logo_pequena.png') }}" type="image/x-icon">
     <title>@yield ('title')</title>
   </head>
+
   <body class="back vw-100 vh-100">
   <nav class="navbar navbar-expand-lg bg-light sombra">
     <div class="container-fluid position-relative">
@@ -53,7 +54,7 @@
                     @php
                       $data = $review->data;
                     @endphp
-                    <div class="alert alert-light border d-flex align-items-center justify-content-between gap-2 mb-2">
+                    <div class="alert alert-light border d-flex align-items-center justify-content-between gap-2 mb-2 {{ $review->read_at ? '' : 'highlight-animation' }}">
                       <a href="{{ route('notifications.read', $review->id) }}" class="text-decoration-none text-dark flex-grow-1 d-flex align-items-center gap-2">
                         <i class="bi bi-star-fill text-warning"></i>
                         <div class="d-flex flex-column">
@@ -91,7 +92,7 @@
                     @php
                       $data = $fav->data;
                     @endphp
-                    <div class="alert alert-light border d-flex align-items-center justify-content-between gap-2 mb-2">
+                    <div class="alert alert-light border d-flex align-items-center justify-content-between gap-2 mb-2 {{ $fav->read_at ? '' : 'highlight-animation' }}">
                       <a href="{{ route('notifications.read', $fav->id) }}" class="text-decoration-none text-dark flex-grow-1 d-flex align-items-center gap-2">
                         <i class="bi bi-heart-fill text-danger"></i>
                         <div class="d-flex flex-column">
@@ -162,6 +163,7 @@
       </div>
     </div>
   </nav>
+
     @yield ('base')
     
     <!-- modal de confirmação de saída -->
@@ -177,7 +179,7 @@
     </div>
   </div>
 
-  <!--script para sair ao clicar em sim-->
+  <!-- scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
   <script>
     function openLogoutModal() {
@@ -188,14 +190,13 @@
       document.getElementById('logout-form').submit();
     });
     
-    // Impede o dropdown de fechar ao trocar de aba
     document.querySelectorAll('.dropdown-menu').forEach(dropdown => {
       dropdown.addEventListener('click', function (e) {
         e.stopPropagation();
       });
     });
     
-    // Remove a bolinha vermelha ao abrir o dropdown e marca todas como lidas
+    //remove a bolinha vermelha ao abrir o dropdown e marca todas como lidas
     const notifDropdown = document.getElementById('notificationDropdown');
     notifDropdown.addEventListener('show.bs.dropdown', async function () {
       const dot = document.getElementById('notif-dot');
@@ -211,8 +212,17 @@
           }
         });
       } catch (e) {
-        // silenciosamente ignora erro de rede
       }
+    });
+
+    //remove o destaque da notificação após 5 segundos
+    document.addEventListener('DOMContentLoaded', () => {
+      const highlighted = document.querySelectorAll('.highlight-animation');
+      highlighted.forEach(el => {
+        setTimeout(() => {
+          el.classList.remove('highlight-animation');
+        }, 5000);
+      });
     });
   </script>
 
