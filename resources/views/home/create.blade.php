@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', 'WorkUp -Criar Post')
+@section('title', 'WorkUp - Criar Post')
 @section('base')
 <br>
 <div class="d-flex justify-content-center align-items-start w-100">

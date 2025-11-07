@@ -2,8 +2,8 @@
 @section('title', 'WorkUP - Meus Posts')
 @section('base')
 <br>
-<div class="d-flex w-100 position-absolute justify-content-center align-items-start">
-  <div class="p-4 w-100 m-4 bg-light rounded sombra">
+<div class="home-container">
+    <div class="home-content-box sombra">
     <!--mensagem de sucesso na edição de post-->
     @if(session('success'))
       <div id="successAlert" class="alert alert-success alert-dismissible fade show d-flex align-items-center gap-2" role="alert">
@@ -42,7 +42,7 @@
               </select>
           </div>
           <!--filtro por categoria-->
-          <div class="col-md-3 col-sm-6">
+          <div class="col-12 col-sm-6 col-md-3">
             <label for="niche" class="form-label">Categoria</label>
             <select name="niche" id="niche" class="form-select">
               <option value="">Todos</option>

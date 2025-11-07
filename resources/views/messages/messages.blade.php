@@ -6,7 +6,7 @@
   <div class="p-4 m-4 bg-light rounded sombra" style="max-width: 600px; width: 100%;">
     <h2 class="text-center mb-4">Entrar em Contato</h2>
 
-    <!-mensagem de sucesso-->
+    <!--mensagem de sucesso-->
     @if(session('success'))
       <div class="alert alert-success alert-dismissible fade show" role="alert">
         {{ session('success') }}
@@ -33,7 +33,7 @@
     <form action="{{  route('messages.send', $user->id) }}" method="POST">
       @csrf
       <div class="mb-3">
-        <label for="message" class="form-label">Mensagem personalizada</label>
+        <label for="message" class="form-label">E-mail personalizado</label>
         <textarea id="message" name="message" class="form-control" rows="5" placeholder="Escreva aqui sua mensagem..."></textarea>
       </div>
       <div class="d-flex justify-content-between mt-4">

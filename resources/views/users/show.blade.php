@@ -26,7 +26,7 @@
   @endif
 
   <div class="row">
-    <div class="col-md-3 border rounded p-4 bg-light d-flex flex-column align-items-center sombra">
+  <div class="col-12 col-md-3 border rounded p-4 bg-light d-flex flex-column align-items-center sombra mb-3 mb-md-0">
       @if ($user->photo)
       <img src="{{ asset('storage/' . $user->photo) }}" 
         class="rounded-circle mb-3 sombra" 
@@ -38,7 +38,7 @@
       <h3 class="mb-2 text-center">{{ $user->name }}</h3>
       
       <!-- avaliações -->
-      <div class="mb-2">
+      <div class="col-12 col-md-9 d-flex justify-content-center">
         @php
           $ratingExact = $user->averageRating() ?? 0;
           $ratingRounded = round($ratingExact);

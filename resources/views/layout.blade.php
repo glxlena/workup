@@ -6,14 +6,36 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-..." crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <script src="{{ asset('build/assets/scriptsWorkUP.js') }}"></script>
-    <link href="{{ asset('build/assets/app.4925d981.css') }}" rel="stylesheet">
+    <link href="{{ asset('build/assets/style.css') }}" rel="stylesheet">
     <link rel="icon" href="{{ asset('images/logo_pequena.png') }}" type="image/x-icon">
     <title>@yield ('title')</title>
+    <style>
+      /* Remove espaçamento entre os itens do navbar */
+      .navbar-nav {
+        gap: 0;
+      }
+
+      .navbar-nav .nav-item {
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      /* Ajusta padding dos links do navbar para ficarem próximos */
+      .navbar-nav .nav-link {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+      }
+
+      /* Garante que os dropdowns apareçam acima de tudo */
+      .dropdown-menu {
+        z-index: 1051 !important;
+      }
+    </style>
   </head>
 
-  <body class="back vw-100 vh-100">
-  <nav class="navbar navbar-expand-lg bg-light sombra">
-    <div class="container-fluid position-relative">
+  <body class="back">
+  <nav class="navbar navbar-expand-lg navbar-light navbar-workup sombra">
+    <div class="container">
       <a class="navbar-brand" href="{{route('home')}}"> 
         <img src="{{ asset('images/logoOficial.png') }}" alt="workup" class="img-fluid" style="height: 1.8em;">
       </a>
@@ -22,6 +44,7 @@
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
         <div class="navbar-nav">
+          <!-- Dropdown de Notificações -->
           <div class="nav-item dropdown">
             <a class="nav-link position-relative" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="bi bi-bell fs-4" style="color: #663399;"></i>
@@ -124,14 +147,10 @@
               </div>
               </div>
 
-              </div>
             </div>
           </div>
 
-        </div>
-      </div>
-      <div class="d-flex flex-row-reverse navibar-nav">
-        <div>
+          <!-- dropdown de usuário -->
           @guest
             @if (Route::has('login'))
               <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -141,22 +160,24 @@
               <a class="nav-link" href="{{ route('register') }}">{{ __('Cadastro') }}</a>
             @endif
           @else
-            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-              <i class="bi bi-person-lines-fill" style="font-size: 30px; color: #663399;"></i>
-            </a>
-
-            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" >
-              <a class="dropdown-item" href="{{ route('user.show', Auth::user()->id) }}"><i class="bi bi-person-gear" style="color: #663399;"></i> Meu Perfil</a>
-              <a class="dropdown-item" href="{{ route('posts.userPosts') }}"><i class="bi bi-list-stars" style="color: #663399;"></i> Meus Posts</a>
-              <a class="dropdown-item" href="{{ route('favorites.index') }}"><i class="bi bi-heart" style="color: #663399;"></i> Meus Favoritos</a>
-              <a class="dropdown-item" href="{{ route('logout') }}"
-                onclick="event.preventDefault(); openLogoutModal();"> <i class="bi bi-box-arrow-right" style="color:red;"></i>
-                {{ __(' Sair') }}
+            <div class="nav-item dropdown">
+              <a id="navbarDropdown" class="nav-link position relative" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="bi bi-person-lines-fill" style="font-size: 30px; color: #663399;"></i>
               </a>
 
-              <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                @csrf
-              </form>
+              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{{ route('user.show', Auth::user()->id) }}"><i class="bi bi-person-gear" style="color: #663399;"></i> Meu Perfil</a>
+                <a class="dropdown-item" href="{{ route('posts.userPosts') }}"><i class="bi bi-list-stars" style="color: #663399;"></i> Meus Posts</a>
+                <a class="dropdown-item" href="{{ route('favorites.index') }}"><i class="bi bi-heart" style="color: #663399;"></i> Meus Favoritos</a>
+                <a class="dropdown-item" href="{{ route('logout') }}"
+                  onclick="event.preventDefault(); openLogoutModal();"> <i class="bi bi-box-arrow-right" style="color:red;"></i>
+                  {{ __(' Sair') }}
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                  @csrf
+                </form>
+              </div>
             </div>
           @endguest
         </div>

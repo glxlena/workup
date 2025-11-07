@@ -2,8 +2,8 @@
 @section('title', 'WorkUP - Meus Favoritos')
 @section('base')
 <br>
-<div class="d-flex w-100 position-absolute justify-content-center align-items-start">
-    <div class="p-4 w-100 m-4 bg-light rounded sombra">
+<div class="home-container">
+    <div class="home-content-box sombra">
         @if(session('success'))
             <div id="successAlert" class="alert alert-success alert-dismissible fade show d-flex align-items-center gap-2" role="alert">
                 <i class="bi bi-check-circle-fill fs-5"></i>

@@ -37,7 +37,7 @@
     @method('PUT')
     <div class="row">
       <!--coluna esquerda-->
-      <div class="col-md-3 border rounded p-4 bg-light d-flex flex-column align-items-center position-relative sombra">
+      <div class="col-12 col-md-3 border rounded p-4 bg-light d-flex flex-column align-items-center sombra mb-3 mb-md-0">
         <!--foto ou icone-->
         <div class="position-relative d-inline-block">
           @if ($user->photo)
@@ -85,7 +85,7 @@
       </div>
 
       <!--coluna direita-->
-      <div class="col-md-9">
+      <div class="col-12 col-md-9 d-flex justify-content-center">
         <div class="p-4 bg-light rounded sombra" style="height: 650px; overflow-y: auto;">
           <h2 class="text-center">Editar Dados</h2>
 

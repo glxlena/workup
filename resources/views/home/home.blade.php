@@ -2,8 +2,8 @@
 @section('title', 'WorkUP - Feed')
 @section('base')
 <br>
-<div class="d-flex w-100 position-absolute justify-content-center align-items-start">
-    <div class="p-4 w-100 m-4 bg-light rounded sombra">
+<div class="home-container">
+    <div class="home-content-box sombra">
         @if(session('success'))
             <div id="successAlert" class="alert alert-success alert-dismissible fade show d-flex align-items-center gap-2" role="alert">
                 <i class="bi bi-check-circle-fill fs-5"></i>
@@ -11,46 +11,58 @@
             </div>
         @endif
         <div id="marketingCarousel" class="carousel slide mb-4 rounded overflow-hidden" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#marketingCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#marketingCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#marketingCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                <button type="button" data-bs-target="#marketingCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
-            </div>
-            <div class="carousel-inner" style="height: 150px;">
-                <div class="carousel-item active" data-bs-interval="5000" style="background-color: #663399;">
-                    <div class="d-flex align-items-center h-100 p-4">
-                        <h1 class="text-white col-9" style="font-weight: 500;">Encontre o freelancer certo para o seu projeto em poucos cliques!</h1>
+            <section class="carousel-section">
+                <div class="container">
+                <div id="phrasesCarousel" class="carousel slide carousel-workup" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#phrasesCarousel" data-bs-slide-to="0" class="active"></button>
+                    <button type="button" data-bs-target="#phrasesCarousel" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#phrasesCarousel" data-bs-slide-to="2"></button>
+                    <button type="button" data-bs-target="#phrasesCarousel" data-bs-slide-to="3"></button>
+                    </div>
+                    <div class="carousel-inner">
+                    <div class="carousel-item active" data-bs-interval="5000" style="background-color: #663399;">
+                        <div class="d-flex align-items-center h-100 p-4">
+                        <h3 class="text-white col-9 m-0">Encontre o freelancer certo para o seu projeto em poucos cliques!</h3>
                         <div class="col-3 text-end">
-                            <img src="{{ asset('images/logo_branca_pequena.png') }}" alt="Logo Branca" style="height: 60px; width: auto;">
+                            <img src="{{ asset('images/logo_branca_pequena.png') }}" alt="Logo" style="height: 60px;">
+                        </div>
                         </div>
                     </div>
-                </div>
-                <div class="carousel-item" data-bs-interval="5000" style="background-color: #ffffff;">
-                    <div class="d-flex align-items-center h-100 p-4">
-                        <h1 class="col-9" style="font-weight: 500; color: #663399">Divulgue serviços e conquiste novos clientes sem complicação!</h1>
+                    <div class="carousel-item" data-bs-interval="5000" style="background-color: white;">
+                        <div class="d-flex align-items-center h-100 p-4">
+                        <h3 class="col-9 m-0" style="color: #663399;">Divulgue serviços e conquiste novos clientes sem complicação!</h3>
                         <div class="col-3 text-end">
-                            <img src="{{ asset('images/logo_pequena.png') }}" alt="Logo Colorida" style="height: 70px; width: auto;">
+                            <img src="{{ asset('images/logo_pequena.png') }}" alt="Logo" style="height: 70px;">
+                        </div>
                         </div>
                     </div>
-                </div>
-                <div class="carousel-item" data-bs-interval="5000" style="background-color: #663399;">
-                    <div class="d-flex align-items-center h-100 p-4">
-                        <h1 class="text-white col-9" style="font-weight: 500;">Serviços organizados, contratos simples e agilidade na contratação!</h1>
+                    <div class="carousel-item" data-bs-interval="5000" style="background-color: #663399;">
+                        <div class="d-flex align-items-center h-100 p-4">
+                        <h3 class="text-white col-9 m-0">Serviços organizados, contratos simples e agilidade na contratação!</h3>
                         <div class="col-3 text-end">
-                            <img src="{{ asset('images/logo_branca_pequena.png') }}" alt="Logo Branca" style="height: 60px; width: auto;">
+                            <img src="{{ asset('images/logo_branca_pequena.png') }}" alt="Logo" style="height: 60px;">
+                        </div>
                         </div>
                     </div>
-                </div>
-                <div class="carousel-item" data-bs-interval="5000" style="background-color: #ffffff;">
-                    <div class="d-flex align-items-center h-100 p-4">
-                        <h1 class="col-9" style="font-weight: 500; color: #663399">Sua rede de freelancers começa aqui!</h1>
+                    <div class="carousel-item" data-bs-interval="5000" style="background-color: white;">
+                        <div class="d-flex align-items-center h-100 p-4">
+                        <h3 class="col-9 m-0" style="color: #663399;">Sua rede de freelancers começa aqui!</h3>
                         <div class="col-3 text-end">
-                            <img src="{{ asset('images/logo_pequena.png') }}" alt="Logo Colorida" style="height: 70px; width: auto;">
+                            <img src="{{ asset('images/logo_pequena.png') }}" alt="Logo" style="height: 70px;">
+                        </div>
                         </div>
                     </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#phrasesCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#phrasesCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                    </button>
                 </div>
-            </div>
+                </div>
+            </section>
 
             <button class="carousel-control-prev" type="button" data-bs-target="#marketingCarousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
