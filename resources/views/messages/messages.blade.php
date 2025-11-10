@@ -34,7 +34,7 @@
       @csrf
       <div class="mb-3">
         <label for="message" class="form-label">E-mail personalizado</label>
-        <textarea id="message" name="message" class="form-control" rows="5" placeholder="Escreva aqui sua mensagem..."></textarea>
+        <textarea id="message" name="message" class="form-control" rows="5" placeholder="Escreva aqui seu e-mail..."></textarea>
       </div>
       <div class="d-flex justify-content-between mt-4">
         <a href="{{ route('home') }}" class="btn btn-outline-secondary">Voltar</a>
@@ -48,7 +48,7 @@
             $cleanPhone = preg_replace('/\D/', '', $user->phone ?? '');
           @endphp
           <a href="https://wa.me/{{ $cleanPhone }}" target="_blank" class="btn btn-success">
-            <i class="bi bi-whatsapp me-1"></i> WhatsApp
+            <p>Ou entre em contato diretamente pelo WhatsApp.</p> <i class="bi bi-whatsapp me-1"></i>
           </a>
         </div>
       </div>

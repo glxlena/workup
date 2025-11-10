@@ -126,7 +126,6 @@
     </div>
   </section>
 
-  <!-- Footer -->
   <footer class="footer-workup">
     <div class="container">
       <p class="mb-0">&copy; 2025 WorkUP. Todos os direitos reservados.</p>

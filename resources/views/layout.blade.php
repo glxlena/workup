@@ -9,28 +9,6 @@
     <link href="{{ asset('build/assets/style.css') }}" rel="stylesheet">
     <link rel="icon" href="{{ asset('images/logo_pequena.png') }}" type="image/x-icon">
     <title>@yield ('title')</title>
-    <style>
-      /* Remove espaçamento entre os itens do navbar */
-      .navbar-nav {
-        gap: 0;
-      }
-
-      .navbar-nav .nav-item {
-        margin-left: 0;
-        margin-right: 0;
-      }
-
-      /* Ajusta padding dos links do navbar para ficarem próximos */
-      .navbar-nav .nav-link {
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-      }
-
-      /* Garante que os dropdowns apareçam acima de tudo */
-      .dropdown-menu {
-        z-index: 1051 !important;
-      }
-    </style>
   </head>
 
   <body class="back">
@@ -44,7 +22,7 @@
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <!-- Dropdown de Notificações -->
+          <!-- dropdown de notificações -->
           <div class="nav-item dropdown">
             <a class="nav-link position-relative" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="bi bi-bell fs-4" style="color: #663399;"></i>
@@ -54,7 +32,7 @@
             </a>
 
             <div class="dropdown-menu dropdown-menu-end p-3" aria-labelledby="notificationDropdown" style="width: 350px;">
-              <!-- abas -->
+              <!-- abas de notificações -->
               <ul class="nav nav-tabs" id="notifTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                   <button class="nav-link active" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews" aria-selected="true" style="color: #663399;">

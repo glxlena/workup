@@ -9,7 +9,7 @@ class FavoriteNotification extends Notification
 {
     use Queueable;
 
-    protected $favorite; // ou dados do post/favoritador
+    protected $favorite; 
 
     public function __construct($favoriteData)
     {

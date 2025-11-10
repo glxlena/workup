@@ -27,8 +27,7 @@ class NotificationController extends Controller
         if (! $notification) {
             return redirect()->back()->with('error', 'Notificação não encontrada.');
         }
-
-        // marca como lida
+        
         $notification->markAsRead();
 
         $data = $notification->data;

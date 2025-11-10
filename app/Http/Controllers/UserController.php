@@ -94,8 +94,6 @@ class UserController extends Controller
             if ($user && !$user->photo) {
                 $user->photo = session('deleted_photo');
                 $user->save();
-
-                // limpa sessão
                 session()->forget(['deleted_photo', 'deleted_photo_user_id']);
 
                 return redirect()->back()->with('success', 'Exclusão de foto desfeita com sucesso!');

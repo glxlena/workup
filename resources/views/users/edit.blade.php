@@ -266,7 +266,7 @@
     }
   });
 
-// IBGE - carregar estados e cidades e selecionar os já salvos
+// IBGE
 async function loadStates() {
     const stateSelect = document.getElementById('state');
     const citySelect = document.getElementById('city');
