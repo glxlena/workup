@@ -48,7 +48,7 @@
             $cleanPhone = preg_replace('/\D/', '', $user->phone ?? '');
           @endphp
           <a href="https://wa.me/{{ $cleanPhone }}" target="_blank" class="btn btn-success">
-            <p>Ou entre em contato diretamente pelo WhatsApp.</p> <i class="bi bi-whatsapp me-1"></i>
+          <i class="bi bi-whatsapp me-1"></i>  Entrar em Contato pelo WhatsApp
           </a>
         </div>
       </div>
