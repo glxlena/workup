@@ -6,49 +6,49 @@ O WorkUp foi criado para aproximar profissionais e clientes, oferecendo uma plat
 
 📌 Principais Funcionalidades
 - 🔐 Autenticação e Perfil
-* Cadastro de novos usuários
-* Login seguro
-* Edição de perfil
-* Visualização de avaliações recebidas
-* Exclusão de avaliações recebidas
+    * Cadastro de novos usuários
+    * Login seguro
+    * Edição de perfil
+    * Visualização de avaliações recebidas
+    * Exclusão de avaliações recebidas
 
 - 📝 Postagens
-* Criar posts de oferta de serviço ou procura de profissional
-* Editar posts criados
-* Excluir posts
-* Definir disponibilidade (disponível/indisponível)
-* Visualizar posts próprios
-* Upload e exibição de imagens
-* Filtrar posts por cidade, categoria e tipo
+    * Criar posts de oferta de serviço ou procura de profissional
+    * Editar posts criados
+    * Excluir posts
+    * Definir disponibilidade (disponível/indisponível)
+    * Visualizar posts próprios
+    * Upload e exibição de imagens
+    * Filtrar posts por cidade, categoria e tipo
 
 - ⭐ Interações
-* Favoritar posts
-* Avaliar usuários após uma experiência
-* Visualizar avaliações recebidas
-* Entrar em contato com outros usuários via:
-    * WhatsApp
-    * E-mail
+    * Favoritar posts
+    * Avaliar usuários após uma experiência
+    * Visualizar avaliações recebidas
+    * Entrar em contato com outros usuários via:
+        * WhatsApp
+        * E-mail
 
 - 🔔 Notificações
-* Notificações ao receber uma nova avaliação
-* Notificações ao ter um post favoritado
+    * Notificações ao receber uma nova avaliação
+    * Notificações ao ter um post favoritado
 
 - 🏗️ Tecnologias Utilizadas
-* Laravel (framework principal)
-* MySQL (banco de dados)
-* Blade (sistema de templates)
-* Bootstrap (estilização)
-* PHP
-* JavaScript
+    * Laravel (framework principal)
+    * MySQL (banco de dados)
+    * Blade (sistema de templates)
+    * Bootstrap (estilização)
+    * PHP
+    * JavaScript
 
 💻 Instalação e Configuração (Ambiente Local)
 Para rodar o WorkUp, você precisará de um ambiente que suporte PHP, Composer, Node.js e MySQL. Não é obrigatório o uso de Docker ou XAMPP.
 - 📦 Pré-requisitos
-* PHP: Versão 8.1 ou superior.
-* Composer: Gerenciador de dependências PHP.
-* Node.js e NPM: Para compilar os assets de frontend.
-* MySQL: Um servidor de banco de dados rodando em sua máquina.
-* Git: Para clonar o repositório.
+    * PHP: Versão 8.1 ou superior.
+    * Composer: Gerenciador de dependências PHP.
+    * Node.js e NPM: Para compilar os assets de frontend.
+    * MySQL: Um servidor de banco de dados rodando em sua máquina.
+    * Git: Para clonar o repositório.
 
 # Rode os seguintes comandos no terminal, dentro do sistema: 
 
