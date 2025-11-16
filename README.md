@@ -2,7 +2,7 @@
 WorkUp é uma plataforma robusta desenvolvida para ser o ponto de encontro entre profissionais autônomos e freelancers, e clientes (pessoas ou empresas) em busca de serviços. O sistema oferece ferramentas de divulgação de trabalho, sistema de avaliação mútua e canais de comunicação direta, estabelecendo um ambiente transparente e eficiente para contratação e networking profissional.
 
 🎯 Objetivo do Sistema
-O WorkUp foi criado para aproximar profissionais e clientes, oferecendo uma plataforma simples, intuitiva e funcional que facilita a divulgação de serviços, avaliação de usuários e comunicação direta entre as partes.
+* O WorkUp foi criado para aproximar profissionais e clientes, oferecendo uma plataforma simples, intuitiva e funcional que facilita a divulgação de serviços, avaliação de usuários e comunicação direta entre as partes.
 
 📌 Principais Funcionalidades
 - 🔐 Autenticação e Perfil
